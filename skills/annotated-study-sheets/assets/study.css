@@ -153,7 +153,8 @@ table.t tr.hi td { background: var(--tint); font-weight: 600; }
 .refs { columns: 2; column-gap: 54px; font-size: 15.5px; line-height: 1.28; }
 .refs p { margin: 0 0 7px; break-inside: avoid; padding-left: 1.4em; text-indent: -1.4em; }
 
-/* annotated documents: one page image per slide */
+/* annotated documents: one page image per slide (window.STUDY.size = [1000, 1300] gives a portrait canvas) */
+body.portrait, body.portrait #stage { background: #e9e6de; }
 .slide.page { padding: 34px 40px 34px; align-items: center; justify-content: center; background: #f1efe9; }
 .slide.page figure.fig { width: 100%; height: 100%; }
 .slide.page figure.fig img { box-shadow: 0 2px 14px rgba(0,0,0,.18); background: #fff; }
@@ -311,9 +312,9 @@ body.sheet-open .slide.active .hl { animation: highlight .6s ease-out forwards; 
 #overview { position: fixed; inset: 0; background: rgba(20,20,20,.97); z-index: 45; display: none; overflow-y: auto; padding: 28px 34px; }
 #overview.open { display: block; }
 #overview .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 18px; }
-#overview .thumb { position: relative; aspect-ratio: 16 / 9; background: #fff; overflow: hidden; cursor: pointer; border-radius: 4px; outline: 3px solid transparent; }
+#overview .thumb { position: relative; aspect-ratio: var(--canvas-ratio, 16 / 9); background: #fff; overflow: hidden; cursor: pointer; border-radius: 4px; outline: 3px solid transparent; }
 #overview .thumb.current { outline-color: var(--accent); }
-#overview .thumb .canvas { position: absolute; left: 0; top: 0; width: 1600px; height: 900px; transform-origin: 0 0; pointer-events: none; }
+#overview .thumb .canvas { position: absolute; left: 0; top: 0; transform-origin: 0 0; pointer-events: none; }
 #overview .thumb .canvas .slide { opacity: 1; visibility: visible; transition: none; }
 #overview .thumb .no { position: absolute; left: 6px; bottom: 6px; background: rgba(0,0,0,.6); color: #fff; font-size: 12px; padding: 1px 7px; border-radius: 10px; }
 #overview h3 { color: #ddd; font: 600 15px var(--font); letter-spacing: .06em; text-transform: uppercase; margin: 6px 0 14px; }

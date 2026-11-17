@@ -32,19 +32,27 @@ CSS frameworks, and do not restyle the sheet: per-deck tweaks go in a small `<st
 in `references/slide-layouts.md`. Working examples to imitate: `examples/kan-explained/` (deck) and
 `examples/chain-of-thought/` (annotated paper) in the repository.
 
+## Never touch the original
+
+When annotating an existing file (PDF, paper, web page, slides, an existing HTML talk), **work on a copy**:
+everything goes into a new sibling folder named after the original plus `-annotated`
+(`paper.pdf` → `paper-annotated/`, `talk.pptx` → `talk-annotated/`, `slides/index.html` → `slides-annotated/`).
+Do not edit, rename, overwrite or delete the original file or its folder. `new_study.py --source` does this for you and
+keeps a copy of the original in `<name>-annotated/source/`.
+
 ## Workflow
 
 ### A. Annotate an existing document
 
-1. **Get page images.**
-   - PDF: `python scripts/pdf_to_pages.py input.pdf OUT/pages --halves` (needs `pymupdf`). `--halves` splits each page
-     into top/bottom images that fill a 16:9 slide and stay readable; omit it for slides or landscape pages.
-     The script prints every text block with its position in % — use those numbers for the zones.
-   - Web page / HTML: print it to PDF first (headless Chrome: `chrome --headless --print-to-pdf=out.pdf URL`), then as above.
-   - PowerPoint / Keynote / Google Slides: export to PDF, then `pdf_to_pages.py` without `--halves`.
-2. **Read the document fully** (text from the script output, or the PDF itself) before writing any note.
-3. **Create the project:** `python scripts/new_study.py document OUT --title "…"` (copies the engine and the template).
-4. **One `<section class="slide page">` per image.** Put marks on 2–6 regions with
+1. **Create the copy:** `python scripts/new_study.py document --source input.pdf` → `input-annotated/` (engine,
+   template and `source/input.pdf`). The original is not modified.
+2. **Get page images** into that folder: `python scripts/pdf_to_pages.py input.pdf input-annotated/pages` (needs `pymupdf`).
+   Show **whole pages** by default; use `--halves` only if a page is too dense to read. The script prints every text block
+   with its position in % — use those numbers for the zones.
+   - Web page / HTML: print it to PDF inside the `-annotated` folder (headless Chrome `--print-to-pdf`), then as above.
+   - PowerPoint / Keynote / Google Slides: export to PDF inside the `-annotated` folder, then as above.
+3. **Read the document fully** (text from the script output, or the PDF itself) before writing any note.
+4. **One `<section class="slide page">` per page image** (two slides showing the same page if one sheet is not enough). Put marks on 2–6 regions with
    `data-zones="n:x0,y0,x1,y1"` (percent of the image). Add `:box` to draw a pencil box, `:formula` for a purple box
    around an equation, `:green` for a green box; without a suffix only the numbered badge is drawn at the region's corner.
    Add `-r`/`-t`/`-b` to place a box's badge on the right, top or bottom (e.g. `:box-r`) when the left side is busy.
@@ -53,7 +61,9 @@ in `references/slide-layouts.md`. Working examples to imitate: `examples/kan-exp
 7. **Check it**: open `index.html?notes#1` in a browser (or headless screenshot) and confirm that every badge sits on
    its region and nothing overflows the sheet. Fix zones by nudging the percentages.
 
-### B. Build a new study deck
+### B. Build a new study deck (or add notes to an existing HTML talk)
+
+To add study notes to a talk that already exists, copy it first to `<name>-annotated/` and work only in the copy.
 
 1. **Create the project:** `python scripts/new_study.py deck OUT --title "…"`. Outline: sections → slides, one message per slide.
 2. Slide content stays **short** (≤ 4 bullets, ≤ 12 words each, figures large). The depth goes into the notes.
@@ -94,6 +104,7 @@ Inline: `**bold**`, `==highlight==`, `*italic*`, `[2]` (small badge pointing to 
 ## Output checklist
 
 - [ ] Folder with `index.html`, `study.css`, `study.js` and the images; opens offline with a double click.
+- [ ] Annotating an existing file: output in `<name>-annotated/`, original untouched (same bytes, same place).
 - [ ] Every slide/page has notes; every `(n)` has a matching `data-n` or zone, and vice versa.
 - [ ] Rendered at 1920×1080 with `?notes`: badges on target, sheet not overflowing, no text cut off.
 - [ ] Tell the user the keys: **N** sheet · **E** edit · **P** presenter · **O** overview · **?** help.

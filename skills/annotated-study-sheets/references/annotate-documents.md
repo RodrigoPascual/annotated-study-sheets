@@ -1,25 +1,27 @@
 # Annotating papers, PDFs, web pages and existing slides
 
-## 1. Pages → images
+## 1. A copy, then page images
 
 ```bash
 pip install pymupdf
-python scripts/pdf_to_pages.py paper.pdf annotated/pages --halves      # papers, reports (portrait)
-python scripts/pdf_to_pages.py slides.pdf annotated/pages               # slide decks (landscape)
+python scripts/new_study.py document --source paper.pdf          # creates paper-annotated/ (original untouched)
+python scripts/pdf_to_pages.py paper.pdf paper-annotated/pages    # whole pages (default)
+python scripts/pdf_to_pages.py paper.pdf paper-annotated/pages --halves   # only for very dense pages
 ```
 
-- `--halves` writes `page-01a.png` (top 52 %) and `page-01b.png` (bottom 52 %). A portrait page shown whole on a 16:9
-  slide is too small to read next to the sheet; halves are not. Skip halves that are empty.
+- The original file is never edited, renamed or moved; all output lives in `<name>-annotated/`.
+- Whole pages are the default. `--halves` writes `page-01a.png` / `page-01b.png` (top and bottom 52 %) when a page is
+  too dense to read whole. To explain one page in two sheets, show the same page image on two slides instead.
 - The script prints each text block as `x0,y0,x1,y1  text` in % of that image — copy those numbers into `data-zones`.
   Figures drawn as vectors are not listed; estimate their box from the image.
-- Web pages: print to PDF first. Word / PowerPoint: export to PDF.
+- Web pages: print to PDF first. Word / PowerPoint: export to PDF (inside the `-annotated` folder).
 
 ## 2. One slide per image
 
 ```html
 <section class="slide page" data-section="Page 2" data-title="Method and equation 3">
   <figure class="fig"><div class="frame">
-    <img src="pages/page-02a.png" alt="Page 2, top" data-zones="1:8,10,49,30; 2:51,12,92,20:formula; 3:51,40,92,70:box">
+    <img src="pages/page-02.png" alt="Page 2" data-zones="1:8,10,49,30; 2:51,12,92,20:formula; 3:51,40,92,70:box">
   </div></figure>
   <aside class="notes"> … </aside>
 </section>

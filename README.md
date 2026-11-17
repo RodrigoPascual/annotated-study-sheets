@@ -16,7 +16,7 @@ Install the skill, ask *“annotate this paper”* or *“make me a study deck a
 [**▶ Live demo: annotated paper**](https://rodrigopascual.github.io/annotated-study-sheets/examples/chain-of-thought/#2) ·
 [Install](#install) · [How it works](#how-it-works)
 
-<img src="docs/img/demo-deck-v2.gif" alt="Pressing N on a slide: the slide moves left, pencil marks are drawn on it and a handwritten study sheet writes itself in" width="900">
+<img src="docs/img/demo-deck-v3.gif" alt="Pressing N on a slide: the slide moves left, pencil marks are drawn on it and a handwritten study sheet writes itself in" width="900">
 
 </div>
 
@@ -46,9 +46,9 @@ This skill gives every page or slide a second layer: the explanation a good teac
 
 The agent renders the pages, finds the regions that carry the argument (abstract claim, key equations, figures, tables)
 and explains each one on the sheet. Example: the real **Chain-of-Thought Prompting** paper (Wei et al., 2022), 10 annotated
-half-pages from abstract to ablations — [open the demo](https://rodrigopascual.github.io/annotated-study-sheets/examples/chain-of-thought/#2).
+sheets over its first 6 pages, from abstract to ablations — [open the demo](https://rodrigopascual.github.io/annotated-study-sheets/examples/chain-of-thought/#2).
 
-<img src="docs/img/demo-paper-v2.gif" alt="An annotated paper page with numbered regions and the study sheet" width="900">
+<img src="docs/img/demo-paper-v4.gif" alt="An annotated paper page with numbered regions and the study sheet" width="900">
 
 ### 2 · Study decks — new presentations with built-in speaker notes
 
@@ -93,6 +93,8 @@ Just ask:
 - *“Turn this blog post into an annotated study sheet.”*
 - *“Build a 12-slide deck about photosynthesis for 15-year-olds, with study notes.”*
 - *“Add study notes to every slide of my talk in `talk/index.html`.”*
+
+Your files are never modified: annotating `paper.pdf` creates a new `paper-annotated/` folder next to it.
 
 Open the resulting `index.html` (double click). Keys:
 

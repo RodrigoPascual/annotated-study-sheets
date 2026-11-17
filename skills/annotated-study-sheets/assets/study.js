@@ -10,7 +10,7 @@
 (() => {
   'use strict';
 
-  const CFG = Object.assign({ author: '', title: document.title, lang: 'en', hideInBar: [], short: {}, colorize: [], openSheet: false }, window.STUDY || {});
+  const CFG = Object.assign({ author: '', title: document.title, lang: 'en', hideInBar: [], short: {}, colorize: [], openSheet: false, size: [1600, 900] }, window.STUDY || {});
   const T = {
     en: { sheet: 'Notes & explanations', page: 'sheet', edit: '✎ edit', view: '✓ view sheet', save: 'save file', load: 'load', export: 'export text',
       restore: 'restore note', original: 'Original notes', loaded: 'Notes loaded', savedLocal: 'Saved in this browser', noLocal: 'Could not save in the browser: use “save file”',
@@ -36,13 +36,16 @@
       foot: 'Hoja de apuntes', pause: 'Pausar', resume: 'Reanudar', reset: 'Reiniciar tiempo', prev: '← Anterior', nextB: 'Siguiente →' },
   }[CFG.lang === 'es' ? 'es' : 'en'];
 
-  const W = 1600, H = 900;
+  const [W, H] = CFG.size;                                       // canvas: 1600x900 (16:9) for decks, portrait for documents
   const KEY = 'study-sheets:' + location.pathname + ':notes';
   const KEY_W = 'study-sheets:sheet-width';
   const $ = (sel, root = document) => root.querySelector(sel);
 
   const stage = $('#stage');
   const deck = $('#deck');
+  deck.style.width = W + 'px'; deck.style.height = H + 'px';
+  document.documentElement.style.setProperty('--canvas-ratio', W + ' / ' + H);
+  if (H > W) document.body.classList.add('portrait');
   const slides = Array.from(deck.querySelectorAll(':scope > section.slide'));
   const N = slides.length;
   let cur = 0, build = 0;
@@ -626,8 +629,8 @@
 html,body{background:#1b1b1b;color:#eee;overflow:hidden;height:100%;margin:0}
 .pp{display:grid;grid-template-columns:56fr 44fr;gap:16px;height:100vh;padding:16px;box-sizing:border-box}
 .c1,.c2{display:flex;flex-direction:column;gap:14px;min-height:0}
-.view{position:relative;background:#000;aspect-ratio:16/9;overflow:hidden;border-radius:4px;flex:none}
-.view .canvas{position:absolute;left:0;top:0;width:1600px;height:900px;transform-origin:0 0}
+.view{position:relative;background:#000;aspect-ratio:${W}/${H};overflow:hidden;border-radius:4px;flex:none}
+.view .canvas{position:absolute;left:0;top:0;width:${W}px;height:${H}px;transform-origin:0 0}
 .view .canvas .slide{opacity:1;visibility:visible;transition:none;color:var(--ink)}
 .lb{font:600 12px var(--font);letter-spacing:.08em;text-transform:uppercase;color:#9a9a9a}
 #sheet.pres{position:relative;inset:auto;transform:none;width:auto;flex:1;min-height:0;display:block;border:0;border-radius:6px;overflow:hidden;
@@ -758,7 +761,7 @@ background-color:var(--s-paper);background-image:radial-gradient(circle,var(--s-
       const m = document.createElement('div');
       m.className = 'thumb'; m.dataset.i = i; m.title = (i + 1) + '. ' + titleOf(s);
       const c = document.createElement('div');
-      c.className = 'canvas'; c.appendChild(cloneSlide(s, true)); m.appendChild(c);
+      c.className = 'canvas'; c.style.width = W + 'px'; c.style.height = H + 'px'; c.appendChild(cloneSlide(s, true)); m.appendChild(c);
       const n = document.createElement('span'); n.className = 'no'; n.textContent = i + 1; m.appendChild(n);
       m.addEventListener('click', () => { overview.classList.remove('open'); go(i, 0); });
       grid.appendChild(m);

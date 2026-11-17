@@ -59,6 +59,7 @@ Canvas: 1600 × 900 px, scaled to the window. Every slide is a `<section class="
 | `short` | `{}` | short names for the section tabs of the sheet |
 | `colorize` | `[]` | `[{ match, color }]` terms coloured automatically in the notes |
 | `openSheet` | `false` | open with the study sheet already showing (good for annotated documents) |
+| `size` | `[1600, 900]` | canvas in px; annotated documents use a portrait `[1000, 1300]` so a whole page fills the height |
 
 URL options: `index.html#7` opens slide 7; `index.html?notes#7` opens it with the sheet.
 

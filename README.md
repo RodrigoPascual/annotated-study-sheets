@@ -84,6 +84,25 @@ cp -r annotated-study-sheets/skills/annotated-study-sheets ~/.claude/skills/
 
 Annotating PDFs also needs `pip install pymupdf`.
 
+**ChatGPT, Gemini or any chatbot (no install)** — chatbots that only get a link cannot run the scripts, and if they
+write their own CSS the result looks nothing like the screenshots. Paste this prompt with your file so they use the real
+engine:
+
+```text
+Make an annotated study sheet of the attached file with the "annotated-study-sheets" skill
+(https://github.com/RodrigoPascual/annotated-study-sheets). Follow AGENTS.md in that repo exactly:
+- Do NOT write any CSS or JavaScript. Load the engine with exactly these two tags:
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/RodrigoPascual/annotated-study-sheets@v1/skills/annotated-study-sheets/assets/study.css">
+  <script src="https://cdn.jsdelivr.net/gh/RodrigoPascual/annotated-study-sheets@v1/skills/annotated-study-sheets/assets/study.js"></script>
+- Start from skills/annotated-study-sheets/assets/document-template.html (deck-template.html for a new deck) and only
+  fill in <section class="slide"> elements, data-zones / data-n marks and <aside class="notes"> written in the notes
+  markup of skills/annotated-study-sheets/references/notes-syntax.md.
+- Export each page or slide of my file to pages/page-01.png, page-02.png… and give me a zip with index.html + pages/.
+```
+
+The page then needs internet the first time it opens (the engine comes from the jsDelivr CDN); for fully offline use,
+put `study.css` and `study.js` next to `index.html`.
+
 ## Use
 
 Just ask:

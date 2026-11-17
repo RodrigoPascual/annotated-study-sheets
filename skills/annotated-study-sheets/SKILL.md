@@ -32,6 +32,17 @@ CSS frameworks, and do not restyle the sheet: per-deck tweaks go in a small `<st
 in `references/slide-layouts.md`. Working examples to imitate: `examples/kan-explained/` (deck) and
 `examples/chain-of-thought/` (annotated paper) in the repository.
 
+**If you cannot run scripts or copy files** (a chat-only assistant that read this skill from a link), still do not
+write CSS or JS. Use the template as is and load the engine from the CDN with exactly:
+
+```html
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/RodrigoPascual/annotated-study-sheets@v1/skills/annotated-study-sheets/assets/study.css">
+<script src="https://cdn.jsdelivr.net/gh/RodrigoPascual/annotated-study-sheets@v1/skills/annotated-study-sheets/assets/study.js"></script>
+```
+
+The templates already fall back to these URLs when `study.css` / `study.js` are missing. A page with its own
+`<style>` theme, its own slide/keyboard script or hand-placed badge `<button>`s is **wrong** — redo it with the engine.
+
 ## Never touch the original
 
 When annotating an existing file (PDF, paper, web page, slides, an existing HTML talk), **work on a copy**:

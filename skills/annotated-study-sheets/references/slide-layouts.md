@@ -45,6 +45,7 @@ Canvas: 1600 × 900 px, scaled to the window. Every slide is a `<section class="
 - `data-n="k"` on any element: a pencil bracket with badge **k** beside text, lists and tables; just the badge on figures.
 - `data-mark="box"` (red pencil box), `"formula"` (purple), `"green"`, `"badge"`, `"bracket"`, `"corner"` override the default.
 - `img[data-zones="2:0,0,50,48; 3:50,0,100,48:box"]` — regions of an image in % (x0,y0,x1,y1), optional `:box|:formula|:green`.
+- Boxes put their badge on the left edge; add `-r`, `-t` or `-b` to move it right, above or below (`:box-r`, `:formula-t`, `data-mark="box-r"`). Use it on two-column pages so the badge does not cover the neighbouring column.
 - Number 1, 2, 3… top-to-bottom, left-to-right; 2–4 marks per slide, 2–6 per document page.
 
 ## `window.STUDY` options

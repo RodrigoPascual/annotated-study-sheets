@@ -1,0 +1,460 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Demo of Annotated Study Sheets (a Claude Code skill): a 12-slide study deck that explains the paper KAN: Kolmogorov-Arnold Networks (Liu et al., 2024) with its own figures. Press N to reveal the hand-annotated study sheet.">
+<meta name="keywords" content="Claude Code skill, Agent Skills, Claude skills, KAN, Kolmogorov-Arnold Networks, paper explained, annotate PDF, study notes, study guide, annotated paper, HTML presentation, slides, speaker notes, AI study tool, reveal.js alternative">
+<meta name="author" content="Rodrigo Pascual-García">
+<link rel="canonical" href="https://rodrigopascual.github.io/annotated-study-sheets/examples/kan-explained/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Annotated Study Sheets">
+<meta property="og:title" content="KAN, explained — study deck demo (press N)">
+<meta property="og:description" content="Demo of Annotated Study Sheets (a Claude Code skill): a 12-slide study deck that explains the paper KAN: Kolmogorov-Arnold Networks (Liu et al., 2024) with its own figures. Press N to reveal the hand-annotated study sheet.">
+<meta property="og:url" content="https://rodrigopascual.github.io/annotated-study-sheets/examples/kan-explained/">
+<meta property="og:image" content="https://rodrigopascual.github.io/annotated-study-sheets/docs/img/deck-annotated.png">
+<meta property="og:image:width" content="1440"><meta property="og:image:height" content="810">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="KAN, explained — study deck demo (press N)">
+<meta name="twitter:description" content="Demo of Annotated Study Sheets (a Claude Code skill): a 12-slide study deck that explains the paper KAN: Kolmogorov-Arnold Networks (Liu et al., 2024) with its own figures. Press N to reveal the hand-annotated study sheet.">
+<meta name="twitter:image" content="https://rodrigopascual.github.io/annotated-study-sheets/docs/img/deck-annotated.png">
+<title>KAN, explained</title>
+<link rel="stylesheet" href="../../skills/annotated-study-sheets/assets/study.css">
+<style>
+  :root { --kan: #0072B2; --mlp: #B07800; --inner: #2E7D32; }
+  .kan { color: var(--kan); font-weight: 650; }
+  .mlp { color: var(--mlp); font-weight: 650; }
+  .eq { font: 400 56px/1.2 "Cambria Math", "STIX Two Math", Georgia, serif; text-align: center; padding: 14px 28px; align-self: center; white-space: nowrap; }
+  .eq i { font-style: italic; }
+  .eq .bigop { display: inline-flex; flex-direction: column; align-items: center; line-height: 1; margin: 0 6px; vertical-align: middle; }
+  .eq .bigop .op { font-size: 1.45em; line-height: .95; }
+  .eq .bigop small { font-size: .4em; font-style: italic; }
+  .eq .par { font-size: 1.9em; font-weight: 200; line-height: 1; vertical-align: middle; position: relative; top: -.05em; }
+  .eq .outer { color: var(--kan); }
+  .eq .inner { color: var(--inner); }
+  .eq sub { font-size: .5em; }
+  .inner-c { color: var(--inner); }
+  .outer-c { color: var(--kan); }
+  .mono { font-family: Consolas, "Cascadia Mono", monospace; font-size: .92em; }
+  ul.refs { font-size: 23px; line-height: 1.4; }
+  ul.refs li { margin-bottom: 14px; }
+  ul.refs i { color: var(--ink2); }
+</style>
+</head>
+<body>
+<div id="stage"><div id="deck">
+
+<!-- 1 · Cover -->
+<section class="slide cover" data-section="Intro" data-title="Cover">
+  <div class="left">
+    <h1>KAN, explained</h1>
+    <p class="tagline">What if a neural network learned its activation functions instead of its weights?</p>
+    <p class="author">Study deck on Liu et al. (2024), <i>KAN: Kolmogorov–Arnold Networks</i></p>
+    <p class="affil">annotated-study-sheets · example · press N</p>
+  </div>
+  <div class="right">
+    <svg viewBox="0 0 420 370" width="470" aria-hidden="true">
+      <g stroke="#9aa3ad" stroke-width="2.2" fill="none">
+        <path d="M120 320 L90 190 M120 320 L210 190 M120 320 L330 190 M300 320 L90 190 M300 320 L210 190 M300 320 L330 190"/>
+        <path d="M90 190 L210 50 M210 190 L210 50 M330 190 L210 50"/>
+      </g>
+      <g fill="#fff" stroke="#9aa3ad" stroke-width="1.6">
+        <rect x="87" y="217" width="24" height="24"/><rect x="141" y="217" width="24" height="24"/><rect x="171" y="217" width="24" height="24"/>
+        <rect x="225" y="217" width="24" height="24"/><rect x="255" y="217" width="24" height="24"/><rect x="309" y="217" width="24" height="24"/>
+        <rect x="150" y="94" width="24" height="24"/><rect x="198" y="94" width="24" height="24"/><rect x="246" y="94" width="24" height="24"/>
+      </g>
+      <g fill="none" stroke="#0072B2" stroke-width="2.4" stroke-linecap="round">
+        <path transform="translate(99 229)" d="M-9 4 C-6 -10,-2 -10,0 0 S6 10,9 -4"/>
+        <path transform="translate(153 229)" d="M-9 -7 Q0 15 9 -7"/>
+        <path transform="translate(183 229)" d="M-9 7 C0 7,4 5,9 -9"/>
+        <path transform="translate(237 229)" d="M-9 7 C-4 7,-4 -8,0 -8 S4 7,9 7"/>
+        <path transform="translate(267 229)" d="M-9 -4 C-6 10,-2 10,0 0 S6 -10,9 4"/>
+        <path transform="translate(321 229)" d="M-9 -7 Q0 15 9 -7"/>
+        <path transform="translate(162 106)" d="M-9 7 C0 7,4 5,9 -9"/>
+        <path transform="translate(210 106)" d="M-9 4 C-6 -10,-2 -10,0 0 S6 10,9 -4"/>
+        <path transform="translate(258 106)" d="M-9 7 C-4 7,-4 -8,0 -8 S4 7,9 7"/>
+      </g>
+      <g fill="#1d2733"><circle cx="120" cy="320" r="8"/><circle cx="300" cy="320" r="8"/><circle cx="90" cy="190" r="8"/><circle cx="210" cy="190" r="8"/><circle cx="330" cy="190" r="8"/><circle cx="210" cy="50" r="8"/></g>
+      <g font-family="Georgia, serif" font-style="italic" font-size="22" fill="#1d2733"><text x="112" y="356">x₁</text><text x="292" y="356">x₂</text></g>
+    </svg>
+  </div>
+  <aside class="notes">
+    # Welcome
+    ! KAN moves the nonlinearity from the nodes to the edges, and makes it learnable.
+    - The paper: Liu, Wang, Vaidya, Ruehle, Halverson, Soljačić, Hou, Tegmark, *KAN: Kolmogorov–Arnold Networks*, arXiv:2404.19756 (2024), accepted at ICLR 2025.
+    - Drawing on the right: a tiny KAN with 2 inputs, 3 hidden nodes, 1 output. Every edge carries its own small 1D curve; nodes just add.
+    - Audience: anyone who knows what an MLP is and wants to read the paper with a guide.
+    - Press **N** on any slide to open this sheet; hover a numbered block to see what it points at.
+    > All figures in this deck come from the paper, reused under CC BY 4.0 (see ATTRIBUTION.md).
+    → The thread of the talk.
+  </aside>
+</section>
+
+<!-- 2 · Roadmap -->
+<section class="slide" data-section="Intro" data-title="Roadmap">
+  <header class="head"><h2>What we will see</h2></header>
+  <div class="content stack" style="justify-content:center">
+    <div class="roadmap" style="--n:5" data-n="1">
+      <div class="stop current"><div class="b"></div><h4>Background</h4><p>MLPs and the KA theorem</p></div>
+      <div class="stop"><div class="b"></div><h4>Architecture</h4><p>Splines on the edges</p></div>
+      <div class="stop"><div class="b"></div><h4>Accuracy</h4><p>Grids and scaling laws</p></div>
+      <div class="stop"><div class="b"></div><h4>Interpretability</h4><p>Network → formula</p></div>
+      <div class="stop"><div class="b"></div><h4>Limits</h4><p>What the authors admit</p></div>
+    </div>
+  </div>
+  <aside class="notes">
+    # The thread
+    ! One question drives the paper: can a different theorem give us a better building block than the MLP?
+    (1) Five stops, in the order of the paper's own sections.
+    - Background = §1–2.1: what MLPs are, and the 1957 theorem KANs are named after.
+    - Architecture = §2.2–2.4: how one KAN layer is built and trained.
+    - Accuracy = §2.4 and §3; Interpretability = §2.5 and §4; Limits = §6.
+    ?? Do I need the maths? Only one formula: the Kolmogorov–Arnold representation. Everything else is pictures.
+    → Start from what we already know: the MLP.
+  </aside>
+</section>
+
+<!-- 3 · MLP recap -->
+<section class="slide" data-section="Background" data-title="MLP recap">
+  <header class="head"><h2>Recap: the <span class="mlp">MLP</span>, the default nonlinear model</h2></header>
+  <div class="content">
+    <div class="col">
+      <ul>
+        <li>A layer: learnable linear map <b>W</b>, then <span class="hl">a fixed nonlinearity σ</span>.</li>
+        <li>Weights live on edges; activations sit on nodes.</li>
+        <li>Backed by the universal approximation theorem.</li>
+        <li data-n="4">In transformers, MLPs hold almost all non-embedding parameters.</li>
+      </ul>
+    </div>
+    <figure class="fig" style="flex:.9">
+      <div class="frame"><img src="figures/fig-0-1-mlp-column.png" alt="MLP column of Figure 0.1: universal approximation formula, shallow MLP and deep MLP diagrams" data-zones="1:3,15,97,28; 2:3,29.5,97,53; 3:3,55,97,99"></div>
+      <figcaption><b>Figure 0.1, left column.</b> The MLP side of the paper's comparison.</figcaption>
+    </figure>
+  </div>
+  <p class="cite">Liu et al. (2024), KAN, arXiv:2404.19756 — CC BY 4.0.</p>
+  <aside class="notes">
+    # Recap: the MLP
+    ! An MLP alternates learnable linear maps W with fixed nonlinearities σ.
+
+    (1) Shallow formula, the universal approximation theorem (UAT): f(x) ≈ Σ a_{i} σ(w_{i}·x + b_{i}), with i = 1…N(ε).
+    - Each term is one neuron: a learned linear combination w_{i}·x + b_{i}, passed through σ, scaled by a_{i}.
+
+    (2) Panel (a): the learnable numbers are on the edges (lines); the little σ boxes on the nodes never change.
+
+    (3) Deep form: MLP(x) = (W_{3} ∘ σ_{2} ∘ W_{2} ∘ σ_{1} ∘ W_{1})(x). Read right to left; ∘ means "apply after".
+    - Panel (c) labels: W = linear, learnable; σ = nonlinear, fixed.
+
+    (4) Why look for an alternative: the paper notes MLPs take almost all non-embedding parameters in transformers and are less interpretable than attention.
+    warn: the UAT says N(ε) exists but gives no bound on how it grows as ε shrinks; it can grow exponentially with the dimension (§2.3).
+    ?? What is σ? A fixed function such as ReLU or SiLU, the same for every neuron.
+    → A different theorem suggests a different network.
+  </aside>
+</section>
+
+<!-- 4 · Kolmogorov–Arnold theorem -->
+<section class="slide" data-section="Background" data-title="KA theorem">
+  <header class="head"><h2>The Kolmogorov–Arnold representation theorem</h2><p class="sub">Any continuous f on a bounded domain, written with 1D functions and sums.</p></header>
+  <div class="content stack" style="justify-content:center;gap:44px">
+    <div class="eq" data-n="1" data-mark="formula">
+      <i>f</i>&#8201;(<i>x</i><sub>1</sub>, …, <i>x<sub>n</sub></i>) =
+      <span class="bigop"><small>2n+1</small><span class="op">∑</span><small>q=1</small></span>
+      <span class="outer"><i>Φ<sub>q</sub></i></span><span class="par">(</span>
+      <span class="bigop"><small>n</small><span class="op">∑</span><small>p=1</small></span>
+      <span class="inner"><i>φ<sub>q,p</sub></i></span>(<i>x<sub>p</sub></i>)<span class="par">)</span>
+    </div>
+    <ul class="cols-2">
+      <li data-n="2"><i class="inner-c">φ<sub>q,p</sub></i>: inner 1D functions, one per input and term.</li>
+      <li data-n="3"><i class="outer-c">Φ<sub>q</sub></i>: outer 1D functions, 2n+1 of them.</li>
+      <li>The only multivariate operation left: <span class="hl">addition</span>.</li>
+      <li data-n="4">Catch: these 1D functions can be fractal.</li>
+    </ul>
+  </div>
+  <aside class="notes">
+    # Kolmogorov–Arnold representation
+    ! Every continuous multivariate function on a bounded domain is a sum of compositions of 1D functions.
+
+    (1) Read it inside out: each input x_{p} goes through its own 1D function, the n results are summed, the sum goes through Φ_{q}, and the 2n+1 outer results are summed.
+    f: f(x) = Σ_{q=1..2n+1} Φ_{q}( Σ_{p=1..n} φ_{q,p}(x_{p}) )   — Eq. (2.1), for smooth f: [0,1]^{n} → ℝ
+
+    (2) φ_{q,p} : [0,1] → ℝ. Index q picks the term, p the input: n(2n+1) inner functions.
+
+    (3) Φ_{q} : ℝ → ℝ, one outer function per term.
+    > Liu et al. (2024), §2.1: in a sense, "the only true multivariate function is addition".
+
+    (4) Why ML had shelved it: the 1D functions can be non-smooth, even fractal, so not learnable in practice (Girosi & Poggio, 1989; Poggio et al., 2020).
+    ?? So what does KAN change? It drops the fixed depth 2 and width 2n+1, and bets that functions in science are smooth and compositional.
+    warn: an exact existence theorem, not a training recipe: it says nothing about how to find φ and Φ.
+    → Turn the formula into a network.
+  </aside>
+</section>
+
+<!-- 5 · KAN idea: Figure 0.1 -->
+<section class="slide" data-section="Architecture" data-title="Activations on edges">
+  <header class="head"><h2>The <span class="kan">KAN</span> idea: learnable activations on edges</h2></header>
+  <div class="content" style="gap:40px">
+    <figure class="fig" style="flex:2">
+      <div class="frame"><img src="figures/fig-0-1-mlp-vs-kan.png" alt="Figure 0.1: MLP vs KAN, theorems, formulas and shallow and deep diagrams" data-zones="1:9.5,30,49.5,53; 2:56,37,99,53; 3:56,73,99,99.5"></div>
+      <figcaption><b>Figure 0.1.</b> MLP (left) vs KAN (right): theorem, formula, shallow and deep model.</figcaption>
+    </figure>
+    <div class="col narrow" style="justify-content:center">
+      <ul>
+        <li><span class="mlp">MLP</span>: fixed σ on nodes, weights on edges.</li>
+        <li><span class="kan">KAN</span>: <span class="hl">learnable 1D functions on edges</span>; nodes only sum.</li>
+        <li data-n="4">No linear weights at all: each becomes a spline.</li>
+      </ul>
+    </div>
+  </div>
+  <p class="cite">Liu et al. (2024), KAN, arXiv:2404.19756 — CC BY 4.0.</p>
+  <aside class="notes">
+    # Figure 0.1: MLP vs KAN
+    ! KANs swap the roles: the nonlinearities are learned and sit on the edges; the nodes only add.
+
+    (1) Panel (a), MLP: fixed activations on nodes, learnable weights on edges.
+
+    (2) Panel (b), KAN with n = 2: Eq. (2.1) drawn as a network. 2 inputs, 2n+1 = 5 hidden nodes, 1 output; each small box on an edge is a learnable 1D function.
+
+    (3) Panel (d), deep KAN: KAN(x) = (Φ_{3} ∘ Φ_{2} ∘ Φ_{1})(x). Each Φ_{l} is a KAN layer: a matrix of 1D functions, nonlinear and learnable.
+    f: x_{l+1,j} = Σ_{i} φ_{l,j,i}(x_{l,i})   — every output node adds one function of every input
+    - The theorem is just a 2-layer KAN of shape [n, 2n+1, 1]; going deeper = stacking layers (the paper's key generalisation).
+
+    (4) No weight matrices: every weight parameter becomes a learnable 1D spline. Cost: O(N^{2}L(G+k)) parameters vs O(N^{2}L) for an MLP of depth L, width N (G grid intervals, spline order k).
+    ?? Isn't that more expensive? Per edge yes, but the paper reports that KANs usually need a much smaller width N.
+    → What is inside each edge box?
+  </aside>
+</section>
+
+<!-- 6 · B-splines and grid extension: Figure 2.2 -->
+<section class="slide" data-section="Architecture" data-title="B-splines">
+  <header class="head"><h2>Each edge is a B-spline</h2></header>
+  <div class="content" style="gap:40px">
+    <figure class="fig" style="flex:2">
+      <div class="frame"><img src="figures/fig-2-2-spline-grid.png" alt="Figure 2.2: activation notation in a [2,5,1] KAN and a B-spline activation refined from G=5 to G=10" data-zones="1:4,2,47,98; 2:60,8,97,50; 3:62,57,97,82"></div>
+      <figcaption><b>Figure 2.2.</b> Left: notation in a [2,5,1] KAN. Right: one activation as a B-spline.</figcaption>
+    </figure>
+    <div class="col narrow" style="justify-content:center">
+      <ul>
+        <li>Cubic B-splines (k = 3) on G grid intervals.</li>
+        <li data-n="4">φ = w<sub>b</sub>·silu + w<sub>s</sub>·spline</li>
+        <li>Grid extension: <span class="hl">refine G, keep training</span>.</li>
+      </ul>
+    </div>
+  </div>
+  <p class="cite">Liu et al. (2024), KAN, arXiv:2404.19756 — CC BY 4.0.</p>
+  <aside class="notes">
+    # Figure 2.2: one edge = one spline
+    ! Each activation is a weighted sum of local bumps; the weights c_{i} are what the network learns.
+
+    (1) Notation: x_{l,i} = node i of layer l; φ_{l,j,i} = function on the edge (l,i) → (l+1,j); x̃ (blue) = its output.
+
+    (2) Zoom on φ_{1,1,5}: φ(x) = Σ_{i=0..7} c_{i}B_{i}(x), cubic (k = 3) on G_{1} = 5 intervals, so G + k = 8 bumps B_{i} (faint colours).
+
+    (3) Grid extension to G_{2} = 10 → 13 bumps (i = 0…12). The new c′_{j} are fitted to the old curve by least squares, so nothing is retrained from scratch.
+
+    (4) The full activation adds a residual SiLU to the spline.
+    f: φ(x) = w_{b}·silu(x) + w_{s}·spline(x),   silu(x) = x / (1 + e^{−x})
+    - Init: w_{s} = 1 and spline ≈ 0 (c_{i} ~ N(0, σ^{2}), σ = 0.1); w_{b} by Xavier.
+    warn: splines live on a bounded grid; the paper updates each grid on the fly from its input activations.
+    ?? Why B-splines? They are local: a c_{i} only moves the curve near its knot, and the grid can be refined.
+    → What finer grids buy in practice.
+  </aside>
+</section>
+
+<!-- 7 · Grid extension staircases: Figure 2.3 -->
+<section class="slide" data-section="Accuracy" data-title="Grid extension">
+  <header class="head"><h2>Finer grids, lower loss: the staircase</h2></header>
+  <div class="content" style="gap:40px">
+    <figure class="fig" style="flex:2.1">
+      <div class="frame"><img src="figures/fig-2-3-grid-extension.png" alt="Figure 2.3: RMSE vs training step for [2,5,1] and [2,1,1] KANs as the grid is refined; test loss and training time vs grid size" data-zones="1:6,9,50,52; 2:57,9,100,52; 3:6,56,50,100; 4:57,56,100,100"></div>
+      <figcaption><b>Figure 2.3.</b> Fitting exp(sin(πx) + y²) while the grid is refined every 200 steps.</figcaption>
+    </figure>
+    <div class="col narrow" style="justify-content:center">
+      <ul>
+        <li>Each refinement: loss drops, then plateaus.</li>
+        <li>Test loss is best near the <span class="hl">interpolation threshold</span>.</li>
+        <li>The smaller [2,1,1] KAN generalises better.</li>
+      </ul>
+    </div>
+  </div>
+  <p class="cite">Liu et al. (2024), KAN, arXiv:2404.19756 — CC BY 4.0.</p>
+  <aside class="notes">
+    # Figure 2.3: staircases
+    ! Refining the grid lowers the loss in jumps, until there are about as many parameters as data points.
+
+    (1) [2,5,1] KAN. x: LBFGS steps; y: RMSE (log). Grid 3 → 5 → … → 1000, one jump every 200 steps; blue = train, orange = test.
+    - Test loss is U-shaped (under- then over-fitting). Threshold expected at 1000 samples / 15G params → G ≈ 67; observed G ∼ 50.
+
+    (2) [2,1,1] KAN, the exact shape of this function: lower test loss, clearer stairs, later threshold.
+
+    (3) Test loss vs grid size G: [2,1,1] scales ≈ G^{−3}, theory says G^{−4}; the median of squared errors gets closer to G^{−4}.
+
+    (4) Seconds per step grow slowly with G; the jump at G = 1000 is blamed on LBFGS line search.
+    warn: at G = 1000 optimisation stops working, probably a bad loss landscape (authors' guess).
+    ?? Why does the smaller KAN win? Fewer parameters and the right structure; pruning (later) finds that shape for you.
+    → Does this hold on more functions, against MLPs?
+  </aside>
+</section>
+
+<!-- 8 · Scaling laws: Figure 3.1 -->
+<section class="slide" data-section="Accuracy" data-title="Scaling laws">
+  <header class="head"><h2><span class="kan">KAN</span> vs <span class="mlp">MLP</span>: error vs number of parameters</h2></header>
+  <div class="content stack" style="gap:30px">
+    <figure class="fig" style="flex:0 1 auto">
+      <div class="frame"><img src="figures/fig-3-1-scaling.png" alt="Figure 3.1: test RMSE vs number of parameters for KANs and MLPs on five toy functions" data-zones="1:3,3,59,26; 2:61,3,79,26; 3:80.4,3,100,26"></div>
+      <figcaption><b>Figure 3.1.</b> Five toy functions. Thick blue: KAN; thin: MLPs of depth 2–5; dashed: theory.</figcaption>
+    </figure>
+    <ul class="cols-2">
+      <li>Test RMSE ∝ N<sup>−α</sup>; KAN theory: <span class="hl">α = 4</span>.</li>
+      <li data-n="4">KANs nearly reach it; MLPs plateau.</li>
+    </ul>
+  </div>
+  <p class="cite">Liu et al. (2024), KAN, arXiv:2404.19756 — CC BY 4.0.</p>
+  <aside class="notes">
+    # Figure 3.1: scaling laws
+    ! On functions with a smooth KA structure, KAN error falls almost as N^{−4}; MLPs fall slower and plateau.
+    f: ℓ ∝ N^{−α}   (ℓ test RMSE, N parameters, α scaling exponent; KAN theory α = k + 1 = 4 for cubic splines)
+
+    (1) How to read: x = number of parameters, y = test RMSE, both log. Red dashed = KAN theory (α = 4); black dashed = Sharma & Kaplan, α = (k+1)/d = 4/d.
+    - Low-dimensional cases: J_{0}(20x) as [1,1], exp(sin(πx)+y^{2}) as [2,1,1], xy as [2,2,1].
+
+    (2) 100-D: exp of the mean of sin^{2}(πx_{i}/2), as a [100,1,1] KAN. The largest gap: MLP curves stay flat.
+
+    (3) 4-D: the 3-layer KAN beats the 2-layer [4,9,1] by far. Depth matters for KANs too.
+
+    (4) KANs almost saturate the red lines; MLPs struggle to reach even the black ones and plateau quickly.
+    - Setup: grid G ∈ {3, 5, 10, 20, 50, 100, 200, 500, 1000}, refined every 200 steps; LBFGS, 1800 steps for both.
+    warn: these functions were chosen to have known smooth KA representations, and the KAN shape is assumed known (§3.2 relaxes this). Both models use vanilla LBFGS; advanced setups are left for future work.
+    → Accurate, but can we also read the network?
+  </aside>
+</section>
+
+<!-- 9 · Interpretability: Figure 2.4 -->
+<section class="slide" data-section="Interpretability" data-title="Network to formula">
+  <header class="head"><h2>From a trained <span class="kan">KAN</span> to a formula</h2></header>
+  <div class="content" style="gap:40px">
+    <figure class="fig" style="flex:2.1">
+      <div class="frame"><img src="figures/fig-2-4-symbolic.png" alt="Figure 2.4: symbolic regression with KAN in six steps, from a [2,5,1] KAN to exp(y^2+sin(pi x))" data-zones="1:4,2,61,50; 2:64,4,88,50; 3:50,50,100,100; 4:1,58,34,100"></div>
+      <figcaption><b>Figure 2.4.</b> Sparsify, prune, set symbolic functions, train, read the formula.</figcaption>
+    </figure>
+    <div class="col narrow" style="justify-content:center">
+      <ul>
+        <li>Regularise, then prune unused nodes.</li>
+        <li>Snap edges to sin, x², exp.</li>
+        <li>Output: <span class="hl">the exact formula</span>.</li>
+      </ul>
+    </div>
+  </div>
+  <p class="cite">Liu et al. (2024), KAN, arXiv:2404.19756 — CC BY 4.0.</p>
+  <aside class="notes">
+    # Figure 2.4: network → formula
+    ! Because every edge is a 1D curve you can look at, a small KAN can be turned into a symbolic formula.
+
+    (1) Start: [2,5,1] KAN on exp(sin(πx) + y^{2}). Step 1 trains with L1 + entropy penalties; faint edges = small activations.
+    f: ℓ_{total} = ℓ_{pred} + λ( μ_{1} Σ_{l} |Φ_{l}|_{1} + μ_{2} Σ_{l} S(Φ_{l}) ),   μ_{1} = μ_{2} = 1
+
+    (2) Step 2 prunes nodes whose incoming or outgoing score is below θ = 10^{−2}: 4 of 5 hidden neurons go, leaving [2,1,1]. The curves look like sin, x^{2}, exp.
+
+    (3) Steps 3a–3c: fix_symbolic sets each edge to sin, x², exp (or suggest_symbolic proposes candidates); each is fitted as y ≈ c·f(a·x + b) + d.
+
+    (4) Step 4 trains only a, b, c, d until the loss hits machine precision. Step 5 prints 1.0e^{1.0y²+1.0sin(3.14x)}; step 6 snaps it to e^{y²+sin(πx)}.
+    ?? Why not plain symbolic regression? The authors find it brittle (success or failure, nothing in between); KAN search is continuous and still fits non-symbolic functions with splines.
+    warn: step 3 relies on someone guessing the right functions. The human stays in the loop.
+    > §4 applies the same workflow to knot theory and Anderson localization.
+    → What does all this cost?
+  </aside>
+</section>
+
+<!-- 10 · Limitations: Figure 6.1 -->
+<section class="slide" data-section="Limits" data-title="Limitations">
+  <header class="head"><h2>Limitations the authors state</h2></header>
+  <div class="content" style="gap:40px">
+    <figure class="fig" style="flex:2">
+      <div class="frame"><img src="figures/fig-6-1-kan-or-mlp.png" alt="Figure 6.1: decision tree, should I use KANs or MLPs, by accuracy, interpretability and efficiency" data-zones="1:2,42,37,97; 2:45,42,73,97; 3:87.5,47,100,97"></div>
+      <figcaption><b>Figure 6.1.</b> “Should I use KANs or MLPs?”</figcaption>
+    </figure>
+    <div class="col narrow" style="justify-content:center">
+      <ul>
+        <li data-n="4">Training is usually <span class="hl">10× slower</span> than MLPs.</li>
+        <li>The theorem only covers two-layer KANs.</li>
+        <li>Evidence: small-scale AI + Science tasks.</li>
+      </ul>
+    </div>
+  </div>
+  <p class="cite">Liu et al. (2024), KAN, arXiv:2404.19756 — CC BY 4.0.</p>
+  <aside class="notes">
+    # Figure 6.1 and §6: the honest part
+    ! The biggest bottleneck is speed: KANs are usually 10× slower than MLPs with the same number of parameters.
+
+    (1) Read the tree from your priority down to a leaf. Accuracy: compositional structure, complicated function or continual learning → KAN; otherwise either is fine.
+
+    (2) Interpretability: low dimension or quantitative → KAN; high dimension → “either is hard”.
+
+    (3) The only MLP leaf in the whole tree: you want fast training.
+
+    (4) Why slow: every edge has a different function, so they cannot share batch computation. Proposed fix: groups of edges sharing one function (“multi-head”).
+    - The authors call it an engineering problem, not a fundamental one; they say they did not try hard to optimise efficiency.
+    - Maths: the theorem covers only [n, 2n+1, 1]; no “deeper” KA theorem yet.
+    - Scope: KANs inside transformers (“kansformers”) are left as future work.
+    ?? Should I switch? Authors: try KANs if you care about interpretability or accuracy and slow training is not a major concern, at least for small-scale AI + Science problems.
+    → What to remember.
+  </aside>
+</section>
+
+<!-- 11 · Takeaways -->
+<section class="slide" data-section="Wrap-up" data-title="Takeaways">
+  <header class="head"><h2>What to remember</h2></header>
+  <div class="content stack" style="justify-content:center">
+    <ol style="font-size:31px">
+      <li data-n="1"><strong>Theorem → network.</strong> 1D functions on edges, sums on nodes.</li>
+      <li data-n="2"><strong>Splines inside.</strong> Refine the grid instead of retraining.</li>
+      <li data-n="3"><strong>Faster scaling</strong> on smooth, compositional functions.</li>
+      <li data-n="4"><strong>Readable,</strong> but <span class="hl">about 10× slower to train</span>.</li>
+    </ol>
+  </div>
+  <aside class="notes">
+    # Takeaways
+    ! KAN = MLP on the outside (learns structure), splines on the inside (learns 1D functions accurately).
+
+    (1) Kolmogorov–Arnold: f = sums of 1D functions. KAN layers generalise it to any width and depth.
+    (2) Each edge φ(x) = w_{b}·silu(x) + w_{s}·Σ c_{i}B_{i}(x); grid extension makes it finer while training.
+    (3) Toy functions: test RMSE close to N^{−4} for KANs, MLPs plateau (Fig. 3.1).
+    (4) Prune and snap to symbols → exact formulas (Fig. 2.4). Cost: usually 10× slower training.
+    > The paper's own summary: worth trying when interpretability or accuracy matters and speed does not.
+    ?? Is KAN a replacement for MLPs everywhere? The paper does not claim that; its evidence is small-scale AI + Science.
+    → Where to read more.
+  </aside>
+</section>
+
+<!-- 12 · References -->
+<section class="slide" data-section="Wrap-up" data-title="References">
+  <header class="head"><h2>References</h2></header>
+  <div class="content stack" style="justify-content:center">
+    <ul class="refs">
+      <li data-n="1">Liu, Z., Wang, Y., Vaidya, S., Ruehle, F., Halverson, J., Soljačić, M., Hou, T. Y. &amp; Tegmark, M. (2024). <i>KAN: Kolmogorov–Arnold Networks.</i> arXiv:2404.19756. ICLR 2025.</li>
+      <li>Kolmogorov, A. N. (1957). On the representation of continuous functions of many variables by superposition of continuous functions of one variable and addition. <i>Doklady Akademii Nauk</i>, 114, 953–956.</li>
+      <li>Hornik, K., Stinchcombe, M. &amp; White, H. (1989). Multilayer feedforward networks are universal approximators. <i>Neural Networks</i>, 2(5), 359–366.</li>
+      <li>Sharma, U. &amp; Kaplan, J. (2020). A neural scaling law from the dimension of the data manifold. arXiv:2004.10802.</li>
+      <li data-n="2">Code: <span class="mono">github.com/KindXiaoming/pykan</span> · <span class="mono">pip install pykan</span></li>
+    </ul>
+  </div>
+  <p class="cite">Figures in this deck: Liu et al. (2024), KAN, arXiv:2404.19756 — CC BY 4.0.</p>
+  <aside class="notes">
+    # Where to go next
+    (1) The paper itself. Read §2 (architecture) and §6 (discussion) first; §3–4 are the experiments.
+    - arXiv version v5 (9 Feb 2025) is the ICLR 2025 camera-ready.
+    - Appendix B: “learnable activation networks” (learnable activations on nodes), a middle ground between MLP and KAN.
+    - Other sources: Kolmogorov (1957) for the theorem, Hornik et al. (1989) for the UAT, Sharma & Kaplan (2020) for the α = 4/d baseline.
+    (2) pykan is the authors' library: fix_symbolic, suggest_symbolic, pruning and plotting used in Fig. 2.4.
+    ex: reproduce Fig. 2.4 with pykan on f(x,y) = exp(sin(πx) + y^{2}): start from a [2,5,1] KAN.
+    warn: figures here are reproduced under CC BY 4.0; keep the attribution if you reuse them.
+  </aside>
+</section>
+
+</div></div>
+
+<script>
+  window.STUDY = { author: 'annotated-study-sheets · example', title: 'KAN, explained', lang: 'en', hideInBar: ['Intro'],
+    colorize: [{ match: 'KANs', color: '#0072B2' }, { match: 'KAN', color: '#0072B2' }, { match: 'MLPs', color: '#B07800' }, { match: 'MLP', color: '#B07800' }] };
+</script>
+<script src="../../skills/annotated-study-sheets/assets/study.js"></script>
+</body>
+</html>

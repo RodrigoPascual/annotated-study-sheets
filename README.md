@@ -1,15 +1,19 @@
 <div align="center">
 
-# ✎ Annotated Study Sheets
+# ✎ Annotated Study Sheets — a Claude Code Skill
 
-**Turn any paper, PDF or slide deck into a hand-annotated study sheet.**
-**Build offline HTML talks where one key — `N` — reveals the study sheet behind every slide.**
+[![Claude Code Skill](https://img.shields.io/badge/Claude%20Code-Skill-D97757)](#install)
+[![Agent Skills](https://img.shields.io/badge/Agent%20Skills-SKILL.md-1F5FA8)](skills/annotated-study-sheets/SKILL.md)
+[![License: MIT](https://img.shields.io/badge/License-MIT-2E7D32)](LICENSE)
+[![Zero dependencies](https://img.shields.io/badge/dependencies-0-6B7280)](skills/annotated-study-sheets/assets)
 
-An [Agent Skill](https://docs.claude.com/en/docs/agents-and-tools/agent-skills/overview) for Claude Code and other AI coding agents.
-Zero dependencies · works from `file://` · MIT
+**A skill for Claude Code (and any agent that reads `SKILL.md`) that turns any paper, PDF or slide deck into a hand-annotated study sheet,**
+**and builds offline HTML talks where one key — `N` — reveals the study sheet behind every slide.**
 
-[**▶ Live demo: study deck**](https://rodrigopascual.github.io/annotated-study-sheets/examples/gradient-descent/#4) ·
-[**▶ Live demo: annotated paper**](https://rodrigopascual.github.io/annotated-study-sheets/examples/annotated-paper/#1) ·
+Install the skill, ask *“annotate this paper”* or *“make me a study deck about…”*, open the HTML. That's it.
+
+[**▶ Live demo: study deck**](https://rodrigopascual.github.io/annotated-study-sheets/examples/kan-explained/#5) ·
+[**▶ Live demo: annotated paper**](https://rodrigopascual.github.io/annotated-study-sheets/examples/chain-of-thought/#2) ·
 [Install](#install) · [How it works](#how-it-works)
 
 <img src="docs/img/demo-deck.gif" alt="Pressing N on a slide: the slide moves left, pencil marks are drawn on it and a handwritten study sheet writes itself in" width="900">
@@ -41,16 +45,18 @@ This skill gives every page or slide a second layer: the explanation a good teac
 > *“Annotate this paper so I can study it.”*
 
 The agent renders the pages, finds the regions that carry the argument (abstract claim, key equations, figures, tables)
-and explains each one on the sheet.
+and explains each one on the sheet. Example: the real **Chain-of-Thought Prompting** paper (Wei et al., 2022), 10 annotated
+half-pages from abstract to ablations — [open the demo](https://rodrigopascual.github.io/annotated-study-sheets/examples/chain-of-thought/#2).
 
 <img src="docs/img/demo-paper.gif" alt="An annotated paper page with numbered regions and the study sheet" width="900">
 
 ### 2 · Study decks — new presentations with built-in speaker notes
 
-> *“Make a 10-slide talk on gradient descent, with study notes.”*
+> *“Make a talk explaining the KAN paper, with study notes.”*
 
 Short, clean slides for the room; the depth lives in the sheet. Beamer-style section bar, presenter view, overview,
-figure zoom, editable notes.
+figure zoom, editable notes. Example: **KAN: Kolmogorov-Arnold Networks** (Liu et al., 2024) explained in 12 slides with the
+paper's own figures — [open the demo](https://rodrigopascual.github.io/annotated-study-sheets/examples/kan-explained/#5).
 
 | Clean (what the audience sees) | Annotated (press **N**) |
 |---|---|
@@ -148,11 +154,12 @@ skills/annotated-study-sheets/
 │   ├── study.js / study.css    # the engine (~1,200 lines, no dependencies)
 │   ├── deck-template.html      # starting point for a new deck
 │   └── document-template.html  # starting point for an annotated document
+├── scripts/new_study.py        # starts a project: copies the engine byte for byte + template
 ├── scripts/pdf_to_pages.py     # PDF → page images (+ text-block positions for the zones)
 └── references/                 # notes syntax, layouts, annotating documents
 examples/
-├── gradient-descent/           # a 9-slide study deck
-└── annotated-paper/            # a 2-page demo paper, annotated
+├── kan-explained/              # 12-slide study deck on “KAN: Kolmogorov-Arnold Networks”
+└── chain-of-thought/           # the “Chain-of-Thought Prompting” paper, annotated
 ```
 
 Everything is English by default; set `window.STUDY = { lang: 'es' }` for Spanish labels (more languages welcome).
@@ -166,4 +173,7 @@ If this helped you study or present, a ⭐ helps others find it.
 
 ## License
 
-[MIT](LICENSE) © Rodrigo Pascual-García. The example paper in `examples/annotated-paper` was written for this repository.
+Code: [MIT](LICENSE) © Rodrigo Pascual-García.
+Examples reproduce pages and figures of two CC BY 4.0 papers, with attribution:
+Wei et al. (2022), [arXiv:2201.11903](https://arxiv.org/abs/2201.11903) · Liu et al. (2024), [arXiv:2404.19756](https://arxiv.org/abs/2404.19756).
+See each example's `ATTRIBUTION.md`. The authors do not endorse this project.

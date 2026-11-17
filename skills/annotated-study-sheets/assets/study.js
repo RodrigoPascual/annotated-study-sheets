@@ -289,7 +289,7 @@
       .replace(/_\{([^}]+)\}/g, '<sub>$1</sub>')
       .replace(/\^\{([^}]+)\}/g, '<sup>$1</sup>');
     CFG.colorize.forEach(c => {
-      h = h.replace(new RegExp('(^|[^\\p{L}\\p{N}_<])(' + reEsc(c.match) + ')(?![\\p{L}\\p{N}_])(?![^<]*>)', 'gu'), `$1<span style="color:${c.color};font-weight:700">$2</span>`);
+      h = h.replace(new RegExp('(^|[^\\p{L}\\p{N}_<])(' + reEsc(c.match) + '(?:s|es)?)(?![\\p{L}\\p{N}_])(?![^<]*>)', 'gu'), `$1<span style="color:${c.color};font-weight:700">$2</span>`);
     });
     return h;
   }
@@ -422,7 +422,7 @@
       const r = img.getBoundingClientRect();
       if (!r.width) return;
       img.dataset.zones.split(';').forEach(z => {
-        const m = z.trim().match(/^(\d{1,2})\s*:\s*([\d.]+)\s*,\s*([\d.]+)\s*,\s*([\d.]+)\s*,\s*([\d.]+)\s*(?::\s*(\w+))?$/);
+        const m = z.trim().match(/^(\d{1,2})\s*:\s*([\d.]+)\s*,\s*([\d.]+)\s*,\s*([\d.]+)\s*,\s*([\d.]+)\s*(?::\s*([\w-]+))?$/);
         if (!m) return;
         const [x0, y0, x1, y1] = m.slice(2, 6).map(Number);
         list.push({ n: m[1], el: img, type: m[6] || 'badge', c: [(r.left - sb.left + r.width * x0 / 100) / k, (r.top - sb.top + r.height * y0 / 100) / k,
@@ -447,20 +447,28 @@
       const [x0, y0, x1, y1] = o.c;
       const seed = 7919 * (i + 1) + 104729 * (+o.n) + j;
       const g = document.createElementNS(SVGNS, 'g');
-      g.setAttribute('class', 'mark ' + (MARK_COLOR[o.type] || 'red'));
+      const [kind, side] = o.type.split('-');                          // e.g. box-r: pencil box, badge on its right
+      g.setAttribute('class', 'mark ' + (MARK_COLOR[kind] || 'red'));
       g.dataset.n = o.n;
       g.style.setProperty('--d', (t0 + j * dt) + 's');
       let cx, cy, d = '';
-      if (o.type === 'bracket') {
+      if (kind === 'bracket') {
         const lt = o.limit == null ? W : o.limit;
         const right = o.left == null ? (x1 > W - 230 || x0 > 230) : (x1 + 46 <= lt || lt > W - 140);
         const a = y0 + 2, b = Math.max(y0 + 22, y1 - 2);
         if (right) { const x = clamp(x1 + 14, 60, W - 44); d = pencilBracket(x, a, b, 'right', seed); cx = x + 20; }
         else { const x = clamp((o.left == null ? x0 : o.left) - 14, 44, W - 60); d = pencilBracket(x, a, b, 'left', seed); cx = x - 20; }
         cy = (a + b) / 2;
-      } else if (o.type === 'badge') { cx = x0 - 19; cy = y0 + 13; }
-      else if (o.type === 'corner') { cx = x1 - 17; cy = y0 + 17; }
-      else { d = pencilRect(x0 - 8, y0 - 7, x1 + 8, y1 + 7, seed); cx = x0 > 70 ? x0 - 30 : x1 + 30; cy = (y0 + y1) / 2; }   // box, formula, green
+      } else if (kind === 'badge') { cx = x0 - 19; cy = y0 + 13; }
+      else if (kind === 'corner') { cx = x1 - 17; cy = y0 + 17; }
+      else {                                                                  // box, formula, green (+ -l -r -t -b: badge side)
+        d = pencilRect(x0 - 8, y0 - 7, x1 + 8, y1 + 7, seed);
+        const sd = side || (x0 > 70 ? 'l' : 'r');
+        if (sd === 'r') { cx = x1 + 30; cy = (y0 + y1) / 2; }
+        else if (sd === 't') { cx = x0 + 22; cy = y0 - 26; }
+        else if (sd === 'b') { cx = x0 + 22; cy = y1 + 26; }
+        else { cx = x0 - 30; cy = (y0 + y1) / 2; }
+      }
       cx = clamp(cx, 18, W - 18); cy = clamp(cy, 18, H - 18);
       if (d) {
         const path = document.createElementNS(SVGNS, 'path');
@@ -553,6 +561,7 @@
     tMarks = setTimeout(() => {
       const imgs = Array.from(s.querySelectorAll('img')).filter(im => !im.complete);
       Promise.all(imgs.map(im => new Promise(r => { im.addEventListener('load', r, { once: true }); im.addEventListener('error', r, { once: true }); })))
+        .then(() => Promise.all(Array.from(s.querySelectorAll('img')).map(im => (im.decode ? im.decode().catch(() => {}) : null))))
         .then(() => requestAnimationFrame(() => { if (cur === i && isOpen()) drawMarks(s, i, !document.body.classList.contains('opening')); }));
     }, delay);
   }

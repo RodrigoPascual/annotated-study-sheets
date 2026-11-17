@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TALK TITLE</title>
+<link rel="stylesheet" href="study.css">
+</head>
+<body>
+<div id="stage"><div id="deck">
+
+<!-- 1 · Cover: no bars. -->
+<section class="slide cover" data-section="Intro" data-title="Cover">
+  <div class="left">
+    <h1>TALK TITLE</h1>
+    <p class="tagline">One sentence that says what the audience will learn.</p>
+    <p class="author">Author Name</p>
+    <p class="affil">Group · Institution</p>
+  </div>
+  <aside class="notes">
+    # Welcome
+    ! The one idea people should remember from the whole talk.
+    - Who I am and why this matters to this audience.
+    → What we will see.
+  </aside>
+</section>
+
+<!-- 2 · Roadmap: the thread of the talk. --n = number of stops. -->
+<section class="slide" data-section="Intro" data-title="Roadmap">
+  <header class="head"><h2>What we will see</h2></header>
+  <div class="content stack" style="justify-content:center">
+    <div class="roadmap" style="--n:4" data-n="1">
+      <div class="stop current"><div class="b"></div><h4>Problem</h4><p>Why it is hard</p></div>
+      <div class="stop"><div class="b"></div><h4>Method</h4><p>What we do</p></div>
+      <div class="stop"><div class="b"></div><h4>Results</h4><p>What we found</p></div>
+      <div class="stop"><div class="b"></div><h4>Takeaways</h4><p>What to keep</p></div>
+    </div>
+  </div>
+  <aside class="notes">
+    # The thread
+    (1) Four stops; each section opens with a chapter slide.
+    → The problem.
+  </aside>
+</section>
+
+<!-- 3 · Chapter divider. -->
+<section class="slide chapter" data-section="Problem" data-title="Problem">
+  <h2><span class="kicker">Part 1</span>The problem</h2>
+  <p class="question">The question this part answers, in plain words.</p>
+  <aside class="notes">
+    # Part 1
+    → First content slide.
+  </aside>
+</section>
+
+<!-- 4 · Figure + short bullets. data-n numbers the elements the notes talk about; data-zones marks panels of an image. -->
+<section class="slide" data-section="Problem" data-title="Figure and bullets">
+  <header class="head"><h2>A figure with three short points</h2></header>
+  <div class="content">
+    <figure class="fig" style="flex:1.6">
+      <div class="frame"><img src="figures/example.png" alt="Describe the figure" data-zones="1:0,0,50,100; 2:50,0,100,100"></div>
+      <figcaption><b>Figure.</b> What to look at.</figcaption>
+    </figure>
+    <div class="col narrow">
+      <ul>
+        <li data-n="3">Short point, one line.</li>
+        <li>Another short point with <span class="hl">the key phrase</span>.</li>
+        <li data-n="4">A third point.</li>
+      </ul>
+    </div>
+  </div>
+  <p class="cite">Author et al. (2024).</p>
+  <aside class="notes">
+    # What the figure shows
+    ! The single message of this slide.
+
+    (1) Left panel: what it shows and how to read it.
+    - Axis, units, colours.
+
+    (2) Right panel: the comparison.
+
+    (3) Why this point matters.
+    > Author et al. (2024): the claim that backs this decision.
+
+    (4) The limitation.
+    warn: a pitfall people often miss.
+    ?? Likely question? Short answer.
+
+    → Next slide.
+  </aside>
+</section>
+
+<!-- 5 · Table. -->
+<section class="slide" data-section="Results" data-title="Results table">
+  <header class="head"><h2>Results</h2></header>
+  <div class="content stack" style="justify-content:center">
+    <table class="t" data-n="1">
+      <thead><tr><th>Method</th><th class="n">Metric A</th><th class="n">Metric B</th></tr></thead>
+      <tbody>
+        <tr><td>Baseline</td><td class="n">0.81</td><td class="n">0.74</td></tr>
+        <tr class="hi"><td>Ours</td><td class="n">0.88</td><td class="n">0.79</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <aside class="notes">
+    # Reading the table
+    (1) Higher is better; the highlighted row is ours.
+    | Method | A |
+    | Baseline | 0.81 |
+    | Ours | 0.88 |
+    → Takeaways.
+  </aside>
+</section>
+
+</div></div>
+
+<script>
+  window.STUDY = { author: 'Author Name · Group', title: 'TALK TITLE', lang: 'en', hideInBar: ['Intro'] };
+</script>
+<script src="notes.js" onerror="this.remove()"></script>
+<script src="study.js"></script>
+</body>
+</html>

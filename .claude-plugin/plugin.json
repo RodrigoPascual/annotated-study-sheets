@@ -1,0 +1,10 @@
+{
+  "name": "annotated-study-sheets",
+  "version": "1.0.0",
+  "description": "Annotated study sheets for papers, PDFs, web pages and slides, and offline HTML decks with a handwritten study sheet that appears with the N key.",
+  "author": { "name": "Rodrigo Pascual-García", "url": "https://github.com/RodrigoPascual" },
+  "homepage": "https://github.com/RodrigoPascual/annotated-study-sheets",
+  "repository": "https://github.com/RodrigoPascual/annotated-study-sheets",
+  "license": "MIT",
+  "keywords": ["skill", "study", "annotation", "slides", "presentation", "papers", "pdf", "education", "notes"]
+}

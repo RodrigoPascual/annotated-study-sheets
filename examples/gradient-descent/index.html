@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Demo of Annotated Study Sheets: a 9-slide HTML presentation on gradient descent, learning rate, momentum and Adam. Press N to reveal the hand-annotated study sheet.">
+<meta name="keywords" content="Claude Code skill, Agent Skills, Claude skills, annotate PDF, study notes, study guide, annotated paper, HTML presentation, slides, speaker notes, AI study tool, reveal.js alternative">
+<meta name="author" content="Rodrigo Pascual-García">
+<link rel="canonical" href="https://rodrigopascual.github.io/annotated-study-sheets/examples/gradient-descent/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Annotated Study Sheets">
+<meta property="og:title" content="Gradient descent, by hand — study deck demo (press N)">
+<meta property="og:description" content="Demo of Annotated Study Sheets: a 9-slide HTML presentation on gradient descent, learning rate, momentum and Adam. Press N to reveal the hand-annotated study sheet.">
+<meta property="og:url" content="https://rodrigopascual.github.io/annotated-study-sheets/examples/gradient-descent/">
+<meta property="og:image" content="https://rodrigopascual.github.io/annotated-study-sheets/docs/img/deck-annotated.png">
+<meta property="og:image:width" content="1440"><meta property="og:image:height" content="810">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Gradient descent, by hand — study deck demo (press N)">
+<meta name="twitter:description" content="Demo of Annotated Study Sheets: a 9-slide HTML presentation on gradient descent, learning rate, momentum and Adam. Press N to reveal the hand-annotated study sheet.">
+<meta name="twitter:image" content="https://rodrigopascual.github.io/annotated-study-sheets/docs/img/deck-annotated.png">
+<title>Gradient descent, by hand</title>
+<link rel="stylesheet" href="../../skills/annotated-study-sheets/assets/study.css">
+<style>
+  .eq { font: 500 54px/1.3 "Cambria Math", "STIX Two Math", Georgia, serif; text-align: center; padding: 18px 0; }
+  .eq .v { color: var(--accent); font-style: italic; }
+  .eq .lr { color: #C0501A; font-style: italic; }
+  .chart text { font: 18px var(--font); fill: var(--ink2); }
+  .chart .ttl { font: 650 22px var(--font); fill: var(--ink); }
+</style>
+</head>
+<body>
+<div id="stage"><div id="deck">
+
+<section class="slide cover" data-section="Intro" data-title="Cover">
+  <div class="left">
+    <h1>Gradient descent,<br>by hand</h1>
+    <p class="tagline">How a model finds the bottom of a valley it cannot see.</p>
+    <p class="author">Example deck</p>
+    <p class="affil">annotated-study-sheets · press N</p>
+  </div>
+  <div class="right">
+    <svg viewBox="0 0 420 320" width="460" aria-hidden="true">
+      <path d="M20 40 C 120 300, 300 300, 400 60" fill="none" stroke="#0072B2" stroke-width="5"/>
+      <g fill="#C0501A"><circle cx="58" cy="128" r="11"/><circle cx="118" cy="210" r="11" opacity=".75"/><circle cx="170" cy="245" r="11" opacity=".55"/><circle cx="205" cy="254" r="11" opacity=".4"/></g>
+    </svg>
+  </div>
+  <aside class="notes">
+    # Welcome
+    ! Training a model = walking downhill on the loss, one small step at a time.
+    - Audience: anyone who has heard “gradient descent” and wants the intuition behind it.
+    - Press **N** on any slide to open this sheet; hover a numbered block to see what it points at.
+    → What we will see.
+  </aside>
+</section>
+
+<section class="slide" data-section="Intro" data-title="Roadmap">
+  <header class="head"><h2>What we will see</h2></header>
+  <div class="content stack" style="justify-content:center">
+    <div class="roadmap" style="--n:4" data-n="1">
+      <div class="stop current"><div class="b"></div><h4>The idea</h4><p>Follow the slope down</p></div>
+      <div class="stop"><div class="b"></div><h4>The rule</h4><p>One line of maths</p></div>
+      <div class="stop"><div class="b"></div><h4>Step size</h4><p>Too small, right, too big</p></div>
+      <div class="stop"><div class="b"></div><h4>Better optimizers</h4><p>Momentum and Adam</p></div>
+    </div>
+  </div>
+  <aside class="notes">
+    # The thread
+    (1) Four stops. Each one answers a question a beginner actually asks.
+    - Idea → rule → how big a step → how to do better than plain steps.
+    → The idea.
+  </aside>
+</section>
+
+<section class="slide chapter" data-section="The idea" data-title="The idea">
+  <h2><span class="kicker">Part 1</span>Follow the slope down</h2>
+  <p class="question">If you are blindfolded on a hill, how do you reach the valley?</p>
+  <aside class="notes">
+    # Part 1
+    ex: blindfolded on a hill, you feel the ground with your feet and step where it goes down. That is all gradient descent does.
+    → The loss landscape.
+  </aside>
+</section>
+
+<section class="slide" data-section="The idea" data-title="Walking downhill">
+  <header class="head"><h2>Walking downhill on the loss</h2></header>
+  <div class="content">
+    <figure class="fig" style="flex:1.5" data-n="1">
+      <div class="frame">
+        <svg class="chart" viewBox="0 0 760 470" width="760">
+          <line x1="60" y1="420" x2="730" y2="420" stroke="#c9c9c9"/><line x1="60" y1="30" x2="60" y2="420" stroke="#c9c9c9"/>
+          <text x="395" y="458" text-anchor="middle">parameter w</text>
+          <text x="22" y="230" text-anchor="middle" transform="rotate(-90 22 230)">loss L(w)</text>
+          <path d="M80 60 C 210 440, 520 440, 710 90" fill="none" stroke="#0072B2" stroke-width="4"/>
+          <g fill="#C0501A">
+            <circle cx="112" cy="140" r="10"/><circle cx="168" cy="238" r="10" opacity=".85"/><circle cx="222" cy="296" r="10" opacity=".7"/>
+            <circle cx="271" cy="328" r="10" opacity=".6"/><circle cx="318" cy="344" r="10" opacity=".5"/><circle cx="360" cy="351" r="10" opacity=".4"/>
+          </g>
+          <path d="M112 140 L168 238 L222 296 L271 328 L318 344 L360 351" fill="none" stroke="#C0501A" stroke-width="2" stroke-dasharray="6 6"/>
+          <line x1="85" y1="96" x2="150" y2="196" stroke="#2E7D32" stroke-width="3"/><text x="160" y="150" fill="#2E7D32">slope</text>
+          <text x="372" y="390" text-anchor="middle" class="ttl">minimum</text>
+        </svg>
+      </div>
+      <figcaption><b>Each dot is one step.</b> Steps shrink as the slope flattens.</figcaption>
+    </figure>
+    <div class="col narrow">
+      <ul>
+        <li data-n="2">The <strong>loss</strong> says how wrong the model is.</li>
+        <li data-n="3">The <strong>gradient</strong> is the slope: it points uphill.</li>
+        <li>Step the other way: <span class="hl">downhill</span>.</li>
+      </ul>
+    </div>
+  </div>
+  <aside class="notes">
+    # The loss landscape
+    ! The gradient points uphill, so we step in the opposite direction.
+
+    (1) Horizontal axis: one parameter w. Vertical: the loss L(w), how wrong the model is.
+    - The orange dots are successive steps. Look how they get closer together near the bottom.
+    - That is automatic: the slope is smaller there, so the step is smaller.
+
+    (2) Loss = a single number summarising the errors (e.g. mean squared error).
+
+    (3) Gradient = derivative of the loss with respect to each parameter.
+    - In 1D it is just the slope; with millions of parameters it is a vector with one slope per parameter.
+    warn: the gradient is local. It only tells you about the ground under your feet, not where the global minimum is.
+
+    → The update rule.
+  </aside>
+</section>
+
+<section class="slide" data-section="The rule" data-title="The update rule">
+  <header class="head"><h2>The whole algorithm is one line</h2></header>
+  <div class="content stack" style="justify-content:center;gap:40px">
+    <div class="eq" data-n="1" data-mark="formula"><span class="v">w</span> ← <span class="v">w</span> − <span class="lr">η</span> · ∇L(<span class="v">w</span>)</div>
+    <ul class="cols-2">
+      <li data-n="2"><span class="v accent"><i>w</i></span>: the parameters (weights).</li>
+      <li data-n="3"><i style="color:#C0501A">η</i>: the learning rate, <span class="hl">the size of the step</span>.</li>
+      <li data-n="4">∇L(<i>w</i>): the gradient of the loss.</li>
+      <li>Repeat until the loss stops falling.</li>
+    </ul>
+  </div>
+  <aside class="notes">
+    # The update rule
+    ! New weights = old weights minus a small step in the direction of the gradient.
+
+    (1) Read it right to left: compute the slope, scale it by η, subtract it.
+    f: w_{t+1} = w_{t} − η · ∇L(w_{t})
+
+    (2) w can be one number or millions of them; the rule is identical.
+
+    (3) η (eta) is a hyper-parameter: we choose it, the model does not learn it.
+
+    (4) The minus sign is the whole trick: gradient = uphill, minus gradient = downhill.
+    ?? Why not jump straight to the minimum? Because we do not know where it is; we only know the local slope.
+
+    → How big should the step be?
+  </aside>
+</section>
+
+<section class="slide" data-section="Step size" data-title="Learning rate">
+  <header class="head"><h2>The learning rate decides everything</h2></header>
+  <div class="content" style="gap:30px">
+    <figure class="fig" data-n="1">
+      <div class="frame"><svg class="chart" viewBox="0 0 400 320" width="400">
+        <path d="M30 40 C 110 300, 290 300, 370 40" fill="none" stroke="#0072B2" stroke-width="4"/>
+        <g fill="#C0501A"><circle cx="52" cy="92" r="8"/><circle cx="60" cy="112" r="8"/><circle cx="68" cy="130" r="8"/><circle cx="76" cy="146" r="8"/></g>
+        <text x="200" y="300" text-anchor="middle" class="ttl">η too small</text></svg></div>
+      <figcaption>Safe, but painfully slow.</figcaption>
+    </figure>
+    <figure class="fig" data-n="2">
+      <div class="frame"><svg class="chart" viewBox="0 0 400 320" width="400">
+        <path d="M30 40 C 110 300, 290 300, 370 40" fill="none" stroke="#0072B2" stroke-width="4"/>
+        <g fill="#C0501A"><circle cx="52" cy="92" r="8"/><circle cx="110" cy="196" r="8"/><circle cx="160" cy="226" r="8"/><circle cx="196" cy="232" r="8"/></g>
+        <text x="200" y="300" text-anchor="middle" class="ttl">η about right</text></svg></div>
+      <figcaption>Reaches the valley in a few steps.</figcaption>
+    </figure>
+    <figure class="fig" data-n="3">
+      <div class="frame"><svg class="chart" viewBox="0 0 400 320" width="400">
+        <path d="M30 40 C 110 300, 290 300, 370 40" fill="none" stroke="#0072B2" stroke-width="4"/>
+        <g fill="#C0501A"><circle cx="70" cy="140" r="8"/><circle cx="330" cy="125" r="8"/><circle cx="48" cy="86" r="8"/><circle cx="356" cy="72" r="8"/></g>
+        <path d="M70 140 L330 125 L48 86 L356 72" fill="none" stroke="#C0501A" stroke-width="2" stroke-dasharray="6 6"/>
+        <text x="200" y="300" text-anchor="middle" class="ttl">η too big</text></svg></div>
+      <figcaption>Overshoots and diverges.</figcaption>
+    </figure>
+  </div>
+  <aside class="notes">
+    # Learning rate
+    ! Too small wastes time; too big never converges. Tuning η is the first thing to try when training misbehaves.
+
+    (1) Tiny steps: the loss goes down, but you need thousands of iterations.
+
+    (2) A good η: big steps where the slope is steep, small ones near the bottom.
+
+    (3) Too big: each step jumps over the valley to a higher point on the other side, and the loss explodes.
+    - Symptom in practice: the loss becomes NaN or grows epoch after epoch.
+
+    | η | Behaviour |
+    |---|---|
+    | 0.0001 | slow |
+    | 0.01 | converges |
+    | 1.0 | diverges |
+    ex: typical starting values are 0.001 for Adam and 0.01–0.1 for plain SGD; always check on your own problem.
+
+    → Can we do better than fixed steps?
+  </aside>
+</section>
+
+<section class="slide chapter" data-section="Better optimizers" data-title="Better optimizers">
+  <h2><span class="kicker">Part 2</span>Better than plain steps</h2>
+  <p class="question">What if the valley is long, narrow and noisy?</p>
+  <aside class="notes">
+    # Part 2
+    - Real loss surfaces are not smooth bowls: they have ravines, plateaus and noise from mini-batches.
+    → Momentum and Adam.
+  </aside>
+</section>
+
+<section class="slide" data-section="Better optimizers" data-title="Momentum and Adam">
+  <header class="head"><h2>Momentum and Adam</h2></header>
+  <div class="content stack" style="justify-content:center;gap:34px">
+    <table class="t" data-n="1">
+      <thead><tr><th>Optimizer</th><th>What it adds</th><th>Intuition</th></tr></thead>
+      <tbody>
+        <tr><td>SGD</td><td>Gradient of a mini-batch</td><td>Feel the slope, step</td></tr>
+        <tr><td>Momentum</td><td>Running average of past gradients</td><td>A ball that keeps rolling</td></tr>
+        <tr class="hi"><td>Adam</td><td>Momentum + per-parameter step size</td><td>Each weight gets its own η</td></tr>
+      </tbody>
+    </table>
+    <p class="small" data-n="2">Adam is the usual default; plain SGD with momentum often generalises slightly better when tuned.</p>
+  </div>
+  <p class="cite">Kingma &amp; Ba (2015), Adam: A Method for Stochastic Optimization.</p>
+  <aside class="notes">
+    # Momentum and Adam
+    ! Momentum smooths the direction; Adam also adapts the step size of every parameter.
+
+    (1) Three rows, each adding one idea to the previous one.
+    - SGD: “stochastic” because each step uses a random mini-batch, not the whole dataset.
+    - Momentum: keeps a velocity, so noise cancels out and narrow ravines are crossed faster.
+    - Adam: divides each step by a running estimate of the gradient’s size → big steps for rarely-updated weights, small for noisy ones.
+    > Kingma & Ba (2015) introduce Adam: momentum on the gradient plus a running average of its square.
+
+    (2) A fair caveat, not a rule.
+    ?? Which one should I use? Start with Adam (η ≈ 0.001); if you have time to tune, compare with SGD + momentum.
+
+    → Takeaways.
+  </aside>
+</section>
+
+<section class="slide" data-section="Takeaways" data-title="Takeaways">
+  <header class="head"><h2>What to remember</h2></header>
+  <div class="content stack" style="justify-content:center">
+    <ol style="font-size:31px">
+      <li data-n="1"><strong>Gradient = uphill.</strong> Step the other way.</li>
+      <li data-n="2"><strong>η is the step size</strong>: the first knob to turn.</li>
+      <li data-n="3"><strong>Momentum and Adam</strong> make the walk smoother and faster.</li>
+    </ol>
+  </div>
+  <aside class="notes">
+    # Takeaways
+    (1) One line of maths: w ← w − η·∇L(w).
+    (2) Loss exploding? Lower η. Loss crawling? Raise it.
+    (3) Default: Adam with η ≈ 0.001.
+    → Questions.
+  </aside>
+</section>
+
+</div></div>
+
+<script>
+  window.STUDY = { author: 'annotated-study-sheets · example', title: 'Gradient descent, by hand', lang: 'en', hideInBar: ['Intro'],
+    colorize: [{ match: 'η', color: '#C0501A' }, { match: 'gradient', color: '#2E7D32' }] };
+</script>
+<script src="../../skills/annotated-study-sheets/assets/study.js"></script>
+</body>
+</html>

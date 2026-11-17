@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DOCUMENT TITLE — annotated</title>
+<link rel="stylesheet" href="study.css">
+</head>
+<body>
+<!-- Annotated document: one <section class="slide page"> per page image (pages/page-01.png …, made with scripts/pdf_to_pages.py).
+     data-zones marks regions of the page (x0,y0,x1,y1 in % of the image; optional ":box" draws a pencil box around it).
+     Opens with the study sheet already on (STUDY.openSheet); press N to see the clean page. -->
+<div id="stage"><div id="deck">
+
+<section class="slide page" data-section="Section name" data-title="Page 1 · Abstract">
+  <figure class="fig"><div class="frame">
+    <img src="pages/page-01.png" alt="Page 1" data-zones="1:10,8,90,16; 2:10,20,90,42:box; 3:10,46,90,70">
+  </div></figure>
+  <aside class="notes">
+    # Page 1 — what the paper claims
+    ! The paper in one sentence, in your own words.
+
+    (1) Title and authors: who, where, when.
+
+    (2) Abstract: the problem, the method and the headline result.
+    - Rephrase each sentence; define every term the first time.
+    f: the key formula, written plainly
+
+    (3) Introduction: why it matters and what is new.
+    ?? Likely exam / meeting question? Short answer.
+
+    → Page 2: the method.
+  </aside>
+</section>
+
+</div></div>
+
+<script>
+  window.STUDY = { author: 'Annotated by NAME', title: 'DOCUMENT TITLE', lang: 'en', openSheet: true };
+</script>
+<script src="notes.js" onerror="this.remove()"></script>
+<script src="study.js"></script>
+</body>
+</html>

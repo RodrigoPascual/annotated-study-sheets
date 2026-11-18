@@ -52,7 +52,8 @@ Macros, options and a full notes file: `references/annotate-pdf.md`. Example: `e
 - **A figure**: what it shows, how to read it (axes, units, colours, markers, panels), the one comparison to look at.
   **A table**: rows, columns, the 1–3 numbers that matter. **An equation**: each symbol, the intuition, a tiny toy
   example when it helps (labelled as toy numbers).
-- One `keyidea` per page (two at most); `question` ("If someone asks") only where it really helps; `warning` for
+- One `keyidea` per page (two at most); one `selftest` ("Check yourself": a question that makes the reader think,
+  then `\answer{...}`) per page; `warning` for
   easy confusions; `\orig{...}` for a term exactly as printed, so the reader can map your words to the original.
 - **Numbers are sacred**: exactly as printed on the left page; never invent or recompute results.
 - Leave white space: the dotted paper is also for the reader's own notes.
@@ -97,7 +98,7 @@ Layouts, classes and configuration: `references/slide-layouts.md`. Notes syntax 
 (1) Block linked to the element with data-n="1" / zone 1 (red badge; hover draws an arrow to it).
 - bullet        -- sub-bullet
 > Source (2024): the claim from the literature that backs this (blue box).
-?? Likely question? Short answer (green "If asked" box).
+?? Self-test question? Its answer ("Check yourself" box; the answer stays blurred until clicked).
 warn: the pitfall people miss (red box).        ex: a concrete example (green box).
 f: the formula, written plainly (purple box).    | table | rows |  (first row = header)
 → What comes next (red arrow line, last line).
@@ -109,7 +110,8 @@ Inline: `**bold**`, `==highlight==`, `*italic*`, `[2]` (small badge pointing to 
 - **Explain, do not paraphrase.** Each `(n)` block says what the element is, how to read it (axes, units, colours, symbols)
   and why it matters. Define every term the first time it appears.
 - **One key idea per slide** (`!`), phrased as the sentence a student should remember.
-- **Anticipate questions** with `??` and give the short answer you would say aloud.
+- **End with a self-test** (`??`): one question that makes the student think (apply, compare, predict, explain why),
+  then its answer. It checks understanding; it is not about preparing a defence.
 - **Numbers are sacred**: copy figures exactly from the source; never invent results. If something is your inference, say so.
 - **Cite, do not copy**: quote at most a short phrase; summarise in your own words; `>` boxes name the source.
 - Keep each sheet to what fits one screen (≈ 8–14 lines of notes). Split into two slides rather than overflow.

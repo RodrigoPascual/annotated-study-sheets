@@ -61,7 +61,8 @@ Prompt with triples \hl{$\langle$input, chain of thought, output$\rangle$}: the 
 \block[y=222]{%
 \num{6}\ \textbf{§2 starts from how people solve problems}: ``she has 10 \ldots{} then \ldots{} 7 \ldots{} so the answer
 is 7'': split the problem, solve each step, then answer. The goal: give a model the same habit.
-\begin{question}
-Isn't a chain of thought just an explanation? Not quite: an explanation usually comes \textbf{after} the answer; a
-chain of thought comes \textbf{before} it and leads to it (page 3).
-\end{question}}
+\begin{selftest}
+Why not simply finetune a model on written-out rationales, as earlier work did?
+\answer{a large set of high-quality rationales is costly to write; prompting needs only a few exemplars, and one
+model checkpoint serves many tasks.}
+\end{selftest}}

@@ -76,8 +76,8 @@ Block options: `y` (desired top, mm), `x`, `w` (mm), `side` (same top as the pre
 `\room{20}` keeps 20 mm free below the last block.
 
 Inside blocks: `\heading{…}` (hand-underlined title), `\sub{…}`, lists `points`, `arrows`, `steps`; boxes `keyidea`,
-`warning`, `example`, `formula`, `summary`, `question` (each takes an optional title: `\begin{example}[Toy numbers]`);
-`smalltable{cols}` with booktabs `\midrule`; colours `\red{}` `\green{}` `\blue{}` `\amber{}` `\teal{}` `\orange{}`
+`warning`, `example`, `formula`, `summary`, `selftest` (each takes an optional title: `\begin{example}[Toy numbers]`);
+`\answer{...}` inside `selftest`; `smalltable{cols}` with booktabs `\midrule`; colours `\red{}` `\green{}` `\blue{}` `\amber{}` `\teal{}` `\orange{}`
 `\purple{}` `\grey{}`; `\hl{…}` / `\hl[hlgreen]{…}` highlighter; `\orig{…}` = a term exactly as printed in the original
 (grey); `\num{n}` badge. Maths: normal `$…$` (unicode-math, STIX Two). Icons: fontawesome5 (`\faCheck`, `\faTimes`).
 Small TikZ sketches are welcome (`boxblue`, `boxamber`, `boxgreen`, `boxorange`, `boxgrey`, `tinyarrow`, `pencil`).
@@ -91,8 +91,9 @@ Colour-code recurring concepts consistently across the document (define them onc
 2. **A figure**: what it shows, how to read it (axes, units, colours, markers, panels), the one comparison to look at.
    **A table**: what rows and columns are, the 1–3 numbers that matter. **An equation**: each symbol, the intuition,
    and a tiny worked example with round toy numbers when it helps (label it as a toy example).
-3. One `keyidea` (at most two) per page; a `question` ("If someone asks") only where a reviewer or examiner would
-   really ask; `warning` for easy confusions.
+3. One `keyidea` (at most two) per page; `warning` for easy confusions; one **`selftest`** ("Check yourself") per page:
+   a question the reader should be able to answer after studying the page, then `\answer{...}`. Make it make them
+   *think* (apply, compare, predict, put in order, explain why), not repeat a sentence of the text.
 4. **Numbers exactly as printed** on the left page. Never invent or recompute results. Cite other pages as "Table 2, page 12".
 5. Explain, do not translate or copy: short sentences, simple words, define every term the first time.
 6. References pages: group them by role and say in a few words why the key ones matter.

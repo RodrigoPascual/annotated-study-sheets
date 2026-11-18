@@ -41,10 +41,11 @@ the written chain is not guaranteed to be what the model actually computed.
 \num{5}\ \textbf{Cheap}: off-the-shelf large models, just add exemplars to the prompt.}
 
 \block{%
-\begin{question}
-Is the extra computation of property \num{2} why it works? The ablation on page 6 says \textbf{no}: dots instead of
-words do not help.
-\end{question}}
+\begin{selftest}
+Which of the four properties does the ablation on page 6 put to the test, and does it hold up as the reason?
+\answer{property 2, extra computation: dots as long as the equation do not help, so more tokens alone are not why
+it works.}
+\end{selftest}}
 
 \block[y=139.5]{%
 \num{6}\ \textbf{§3 Arithmetic first}: simple for people, hard for language models. Claim: the 540B model + chain

@@ -53,3 +53,10 @@ each removing one ingredient (Figure 5, next page).}
 \block[y=224]{%
 \num{6}\ \textbf{Equation only}: write just the equation, then the answer. It \hl[hlpink]{does not help much on GSM8K}:
 those questions are too hard to turn straight into an equation. It does help on one- or two-step datasets.}
+
+\block{%
+\begin{selftest}
+On which benchmark did chain of thought help most, and what does that tell you?
+\answer{GSM8K, the hardest (lowest baseline): it more than doubled for the largest GPT and PaLM, while one-step
+SingleOp barely moved. The more steps a problem needs, the more the chain helps.}
+\end{selftest}}

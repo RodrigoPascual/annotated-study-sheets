@@ -247,6 +247,9 @@ body.sheet-open #sheet { transform: none; }
 #sheet .box.source .bt { color: var(--s-accent); }
 #sheet .box.asked { background: rgba(0,135,106,.07); border-color: var(--s-teal); }
 #sheet .box.asked .bt { color: var(--s-teal); }
+#sheet .box.asked .ans { filter: blur(4px); cursor: pointer; transition: filter .25s; user-select: none; }
+#sheet .box.asked .ans.show { filter: none; user-select: text; }
+#sheet .box.asked .ans::before { content: "→ "; color: var(--s-teal); }
 
 #sheet .mini { border-collapse: collapse; font-size: .94em; line-height: 1.4; margin: 6px 0; width: auto; max-width: 100%; }
 #sheet .mini th { font-weight: 700; text-align: left; padding: 2px 16px 3px 0; border-bottom: 1px solid rgba(107,114,128,.65); vertical-align: bottom; }

@@ -32,11 +32,11 @@
 \ifdefstring{\ss@lang}{es}{%
   \newcommand\ss@tNotes{Notas y explicaciones}\newcommand\ss@tSheet{hoja}\newcommand\ss@tPage{pág.}
   \newcommand\ss@tOf{de}\newcommand\ss@tKey{Idea clave}\newcommand\ss@tWarn{¡Ojo!}\newcommand\ss@tEx{Ejemplo}
-  \newcommand\ss@tFormula{Fórmula}\newcommand\ss@tSummary{En una frase}\newcommand\ss@tAsk{Si te preguntan}
+  \newcommand\ss@tFormula{Fórmula}\newcommand\ss@tSummary{En una frase}\newcommand\ss@tAsk{Ponte a prueba}\newcommand\ss@tAnswer{Respuesta}
   \newcommand\ss@tRoom{hueco libre para tus notas}\newcommand\ss@tPending{Notas de esta página aún sin escribir.}}{%
   \newcommand\ss@tNotes{Notes \& explanations}\newcommand\ss@tSheet{sheet}\newcommand\ss@tPage{page}
   \newcommand\ss@tOf{of}\newcommand\ss@tKey{Key idea}\newcommand\ss@tWarn{Watch out}\newcommand\ss@tEx{Example}
-  \newcommand\ss@tFormula{Formula}\newcommand\ss@tSummary{In one sentence}\newcommand\ss@tAsk{If someone asks}
+  \newcommand\ss@tFormula{Formula}\newcommand\ss@tSummary{In one sentence}\newcommand\ss@tAsk{Check yourself}\newcommand\ss@tAnswer{Answer}
   \newcommand\ss@tRoom{room for your own notes}\newcommand\ss@tPending{Notes for this page not written yet.}}
 
 %% ---------------------------------------------------------------- fonts
@@ -151,8 +151,11 @@
   title={\faCalculator\ #1}, attach title to upper={\ }, coltitle=maths, fonttitle=\bfseries}
 \newtcolorbox{summary}[1][\ss@tSummary]{ss, colback=accent!7, borderline west={2.2pt}{0pt}{accent},
   title={\faFlag\ #1}, attach title to upper={\ }, coltitle=accent, fonttitle=\bfseries}
-\newtcolorbox{question}[1][\ss@tAsk]{ss, colback=greyink!9, borderline west={2.2pt}{0pt}{greyink},
-  title={\faComments\ #1}, attach title to upper={\ }, coltitle=ink, fonttitle=\bfseries}
+%% selftest: a self-test question the reader should be able to answer after this page (active recall), then \answer{...}
+\newtcolorbox{selftest}[1][\ss@tAsk]{ss, colback=teal!7, borderline west={2.2pt}{0pt}{teal},
+  title={\faBrain\ #1}, attach title to upper={\ }, coltitle=teal, fonttitle=\bfseries}
+\newcommand\answer[1]{\par\addvspace{.4mm}{\color{teal}\faArrowRight}\ {\color{greyink}\textit{\ss@tAnswer:} #1}}
+\newenvironment{question}{\begin{selftest}}{\end{selftest}}   % old name, kept for compatibility
 
 %% small tables: \begin{smalltable}{l r r} a & b & c \\ \midrule ... \end{smalltable}
 \newenvironment{smalltable}[1]{\par\smallskip\begingroup\fontsize{7.8}{10.2}\selectfont\arrayrulecolor{greyink}%

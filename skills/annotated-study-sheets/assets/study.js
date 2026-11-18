@@ -17,7 +17,7 @@
       gap: 'room for your own notes', empty: 'No notes on this slide.', next: 'Next', last: 'Last slide', now: 'Now', notes: 'Notes', goto: 'Go to', restored: 'Note restored',
       popup: 'The browser blocked the window: allow pop-ups for this file', notesFrom: 'Notes loaded from ', badFile: 'That file has no notes for this deck',
       downloaded: 'Downloaded notes.js: move it next to index.html', savedTo: 'Notes saved to ',
-      boxes: { idea: 'Key idea', warn: 'Watch out!', source: 'From the literature', asked: 'If asked', example: 'Example', formula: 'Formula' },
+      boxes: { idea: 'Key idea', warn: 'Watch out!', source: 'From the literature', asked: 'Check yourself', example: 'Example', formula: 'Formula' },
       help: [['→ Space PgDn', 'Next build or slide'], ['← PgUp', 'Previous'], ['Home End', 'First / last'], ['12 + Enter', 'Go to slide 12'],
         ['N', 'Study sheet: annotated notes with pencil marks on the slide (hover a numbered block)'], ['E', 'With the sheet open: edit this slide’s notes (Esc to go back)'],
         ['P', 'Presenter view in another window (current, next, notes, timer)'], ['O', 'Overview of all slides'], ['F', 'Fullscreen'], ['B .', 'Black screen'],
@@ -28,7 +28,7 @@
       gap: 'hueco libre para tus notas', empty: 'Sin notas en esta diapositiva.', next: 'Siguiente', last: 'Última diapositiva', now: 'Ahora', notes: 'Notas', goto: 'Ir a', restored: 'Nota restaurada',
       popup: 'El navegador ha bloqueado la ventana: permite ventanas emergentes', notesFrom: 'Notas cargadas de ', badFile: 'Ese archivo no contiene notas de esta presentación',
       downloaded: 'Descargado notas.js: muévelo junto a index.html', savedTo: 'Notas guardadas en ',
-      boxes: { idea: 'Idea clave', warn: '¡Ojo!', source: 'Según la bibliografía', asked: 'Si te preguntan', example: 'Ejemplo', formula: 'Fórmula' },
+      boxes: { idea: 'Idea clave', warn: '¡Ojo!', source: 'Según la bibliografía', asked: 'Ponte a prueba', example: 'Ejemplo', formula: 'Fórmula' },
       help: [['→ Espacio AvPág', 'Siguiente paso o diapositiva'], ['← RePág', 'Anterior'], ['Inicio Fin', 'Primera / última'], ['12 + Intro', 'Ir a la diapositiva 12'],
         ['N', 'Hoja de apuntes: notas con marcas a lápiz sobre la diapositiva'], ['E', 'Con la hoja abierta: editar las notas (Esc para volver)'],
         ['P', 'Vista de presentador en otra ventana'], ['O', 'Vista general'], ['F', 'Pantalla completa'], ['B .', 'Pantalla en negro'],
@@ -276,7 +276,7 @@
     idea: ic('M9 18h6M10 21h4M12 3a6 6 0 0 0-3.6 10.8c.7.6 1.1 1.3 1.1 2.2h5c0-.9.4-1.6 1.1-2.2A6 6 0 0 0 12 3z'),
     warn: ic('M12 3 2 20h20L12 3zM12 10v4M12 17v.5'),
     source: ic('M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2V5zM4 21a2 2 0 0 1 2-2h13v2H6M8 7h7M8 10.5h5'),
-    asked: ic('M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18zM9.5 9.3a2.6 2.6 0 0 1 5 .9c0 1.8-2.5 2.2-2.5 3.8M12 17v.4'),
+    asked: ic('M9 4.5a3 3 0 0 0-3 3 3 3 0 0 0-1.5 5.2A3 3 0 0 0 7 17.5a2.5 2.5 0 0 0 5 .5V5.5a2.5 2.5 0 0 0-3-1zM15 4.5a3 3 0 0 1 3 3 3 3 0 0 1 1.5 5.2 3 3 0 0 1-2.5 4.8 2.5 2.5 0 0 1-5 .5'),
     example: ic('M12 21v-8M12 13c0-4 3-7 8-7 0 4-3 7-8 7zM12 15c0-3-2.5-5.5-7-5.5 0 3 2.5 5.5 7 5.5z'),
     formula: ic('M6 3h12a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zM8 7h8M8 12h.5M12 12h.5M15.5 12h.5M8 16h.5M12 16h.5M15.5 16h.5'),
     pen: '<svg viewBox="0 0 24 24" width="1em" height="1em"><path d="M3.5 20.5l1.2-5.2L15.6 4.4a2 2 0 0 1 2.8 0l1.2 1.2a2 2 0 0 1 0 2.8L8.7 19.3z" fill="currentColor"/><path d="M14 6l4 4" stroke="#FFFDF6" stroke-width="1.4"/></svg>',
@@ -350,6 +350,13 @@
       const st = ` style="--i:${i}"`;
       if (b.type === 'title') return `<h3 class="h-title"${st}><span>${inline(b.parts[0][1])}</span></h3>`;
       if (b.type === 'num') return `<div class="block num" data-n="${b.n}"${st}>${partsHtml(b.parts, `<span class="badge">${b.n}</span>`)}</div>`;
+      if (b.type === 'asked') {           // "Check yourself": question first, answer hidden until clicked (active recall)
+        const all = b.parts.filter(p => p[0] === 'p').map(p => p[1]).join(' ');
+        const k = all.indexOf('? ');
+        const q = k < 0 ? all : all.slice(0, k + 1), a = k < 0 ? '' : all.slice(k + 2);
+        return `<div class="block box asked"${st}><p><span class="bt">${ICON.asked} ${T.boxes.asked}</span> <b>${inline(q)}</b></p>`
+          + (a ? `<p class="ans" title="${CFG.lang === 'es' ? 'Clic para ver la respuesta' : 'Click to show the answer'}">${inline(a)}</p>` : '') + '</div>';
+      }
       if (b.box) return `<div class="block box ${b.type}"${st}>${partsHtml(b.parts, `<span class="bt">${ICON[b.type]} ${T.boxes[b.type]}</span>`)}</div>`;
       if (b.type === 'next') return `<div class="block next"${st}><span class="ar">→</span> ${inline(b.parts[0][1])}</div>`;
       return `<div class="block"${st}>${partsHtml(b.parts)}</div>`;
@@ -597,6 +604,8 @@
     else { render.dataset.id = ''; paintSheet(true); }
   }
   sheet.addEventListener('click', e => {
+    const ans = e.target.closest('.ans');
+    if (ans) { ans.classList.toggle('show'); return; }
     const a = e.target.closest('button') && e.target.closest('button').dataset.a;
     if (a === 'edit') toggleEdit();
     else if (a === 'save') saveFile();

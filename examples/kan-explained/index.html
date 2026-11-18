@@ -12,12 +12,12 @@
 <meta property="og:title" content="KAN, explained — study deck demo (press N)">
 <meta property="og:description" content="Demo of Annotated Study Sheets (a Claude Code skill): a 12-slide study deck that explains the paper KAN: Kolmogorov-Arnold Networks (Liu et al., 2024) with its own figures. Press N to reveal the hand-annotated study sheet.">
 <meta property="og:url" content="https://rodrigopascual.github.io/annotated-study-sheets/examples/kan-explained/">
-<meta property="og:image" content="https://rodrigopascual.github.io/annotated-study-sheets/docs/img/deck-annotated-v2.png">
+<meta property="og:image" content="https://rodrigopascual.github.io/annotated-study-sheets/docs/img/deck-annotated-v3.png">
 <meta property="og:image:width" content="1440"><meta property="og:image:height" content="810">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="KAN, explained — study deck demo (press N)">
 <meta name="twitter:description" content="Demo of Annotated Study Sheets (a Claude Code skill): a 12-slide study deck that explains the paper KAN: Kolmogorov-Arnold Networks (Liu et al., 2024) with its own figures. Press N to reveal the hand-annotated study sheet.">
-<meta name="twitter:image" content="https://rodrigopascual.github.io/annotated-study-sheets/docs/img/deck-annotated-v2.png">
+<meta name="twitter:image" content="https://rodrigopascual.github.io/annotated-study-sheets/docs/img/deck-annotated-v3.png">
 <title>KAN, explained</title>
 <link rel="stylesheet" href="../../skills/annotated-study-sheets/assets/study.css">
 <style>
@@ -109,7 +109,7 @@
     - Background = §1–2.1: what MLPs are, and the 1957 theorem KANs are named after.
     - Architecture = §2.2–2.4: how one KAN layer is built and trained.
     - Accuracy = §2.4 and §3; Interpretability = §2.5 and §4; Limits = §6.
-    ?? Do I need the maths? Only one formula: the Kolmogorov–Arnold representation. Everything else is pictures.
+    ?? Which theorem gives KANs their name, and which one is behind MLPs? Kolmogorov–Arnold representation (1957) for KANs; the universal approximation theorem for MLPs.
     → Start from what we already know: the MLP.
   </aside>
 </section>
@@ -146,7 +146,7 @@
 
     (4) Why look for an alternative: the paper notes MLPs take almost all non-embedding parameters in transformers and are less interpretable than attention.
     warn: the UAT says N(ε) exists but gives no bound on how it grows as ε shrinks; it can grow exponentially with the dimension (§2.3).
-    ?? What is σ? A fixed function such as ReLU or SiLU, the same for every neuron.
+    ?? In an MLP, what is learned and what is fixed? The weights W on the edges are learned; the activation σ on the nodes (ReLU, SiLU…) is fixed.
     → A different theorem suggests a different network.
   </aside>
 </section>
@@ -182,7 +182,7 @@
     > Liu et al. (2024), §2.1: in a sense, "the only true multivariate function is addition".
 
     (4) Why ML had shelved it: the 1D functions can be non-smooth, even fractal, so not learnable in practice (Girosi & Poggio, 1989; Poggio et al., 2020).
-    ?? So what does KAN change? It drops the fixed depth 2 and width 2n+1, and bets that functions in science are smooth and compositional.
+    ?? For n = 3 inputs, how many outer functions Φ_{q} and inner functions φ_{q,p}? 2n+1 = 7 outer and n(2n+1) = 21 inner functions.
     warn: an exact existence theorem, not a training recipe: it says nothing about how to find φ and Φ.
     → Turn the formula into a network.
   </aside>
@@ -218,7 +218,7 @@
     - The theorem is just a 2-layer KAN of shape [n, 2n+1, 1]; going deeper = stacking layers (the paper's key generalisation).
 
     (4) No weight matrices: every weight parameter becomes a learnable 1D spline. Cost: O(N^{2}L(G+k)) parameters vs O(N^{2}L) for an MLP of depth L, width N (G grid intervals, spline order k).
-    ?? Isn't that more expensive? Per edge yes, but the paper reports that KANs usually need a much smaller width N.
+    ?? A KAN has more parameters per edge than an MLP. Why can it still be smaller overall? It usually needs a much smaller width N (the paper's claim), and the edge cost is O(G+k) instead of O(1).
     → What is inside each edge box?
   </aside>
 </section>
@@ -254,7 +254,7 @@
     f: φ(x) = w_{b}·silu(x) + w_{s}·spline(x),   silu(x) = x / (1 + e^{−x})
     - Init: w_{s} = 1 and spline ≈ 0 (c_{i} ~ N(0, σ^{2}), σ = 0.1); w_{b} by Xavier.
     warn: splines live on a bounded grid; the paper updates each grid on the fly from its input activations.
-    ?? Why B-splines? They are local: a c_{i} only moves the curve near its knot, and the grid can be refined.
+    ?? Cubic spline (k = 3) on G = 5 intervals: how many coefficients c_{i}? And on G = 10? G + k: 8, then 13 — and the new ones are fitted to the old curve, not retrained.
     → What finer grids buy in practice.
   </aside>
 </section>
@@ -289,7 +289,7 @@
 
     (4) Seconds per step grow slowly with G; the jump at G = 1000 is blamed on LBFGS line search.
     warn: at G = 1000 optimisation stops working, probably a bad loss landscape (authors' guess).
-    ?? Why does the smaller KAN win? Fewer parameters and the right structure; pruning (later) finds that shape for you.
+    ?? Why does the test loss go up again at large G? Overfitting: once there are about as many parameters as data points (G ≈ 50–67 here), the extra grid points fit noise.
     → Does this hold on more functions, against MLPs?
   </aside>
 </section>
@@ -356,7 +356,7 @@
     (3) Steps 3a–3c: fix_symbolic sets each edge to sin, x², exp (or suggest_symbolic proposes candidates); each is fitted as y ≈ c·f(a·x + b) + d.
 
     (4) Step 4 trains only a, b, c, d until the loss hits machine precision. Step 5 prints 1.0e^{1.0y²+1.0sin(3.14x)}; step 6 snaps it to e^{y²+sin(πx)}.
-    ?? Why not plain symbolic regression? The authors find it brittle (success or failure, nothing in between); KAN search is continuous and still fits non-symbolic functions with splines.
+    ?? Put the steps in order: snap to symbols, train with sparsity, retrain a b c d, prune. Train with L1 + entropy → prune → snap each edge to a symbol → retrain only a, b, c, d.
     warn: step 3 relies on someone guessing the right functions. The human stays in the loop.
     > §4 applies the same workflow to knot theory and Anderson localization.
     → What does all this cost?
@@ -394,7 +394,7 @@
     - The authors call it an engineering problem, not a fundamental one; they say they did not try hard to optimise efficiency.
     - Maths: the theorem covers only [n, 2n+1, 1]; no “deeper” KA theorem yet.
     - Scope: KANs inside transformers (“kansformers”) are left as future work.
-    ?? Should I switch? Authors: try KANs if you care about interpretability or accuracy and slow training is not a major concern, at least for small-scale AI + Science problems.
+    ?? Which single priority sends you to an MLP in the decision tree, and why? Fast training: KANs are usually 10× slower because every edge has its own function, so edges cannot share batched computation.
     → What to remember.
   </aside>
 </section>
@@ -419,7 +419,7 @@
     (3) Toy functions: test RMSE close to N^{−4} for KANs, MLPs plateau (Fig. 3.1).
     (4) Prune and snap to symbols → exact formulas (Fig. 2.4). Cost: usually 10× slower training.
     > The paper's own summary: worth trying when interpretability or accuracy matters and speed does not.
-    ?? Is KAN a replacement for MLPs everywhere? The paper does not claim that; its evidence is small-scale AI + Science.
+    ?? Explain KAN in one sentence without notes, then check. Like an MLP outside (it learns the structure), splines inside (each edge learns an accurate 1D function); tested on small-scale AI + Science.
     → Where to read more.
   </aside>
 </section>

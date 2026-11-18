@@ -57,4 +57,8 @@ pays off with models of \hl[hlgreen]{about 100B parameters}.
 \begin{warning}
 Small models wrote fluent but illogical chains and did \textbf{worse} than standard prompting: this is not a trick
 for small models.
-\end{warning}}
+\end{warning}
+\begin{selftest}
+Would chain-of-thought prompting help an 8B model on GSM8K?
+\answer{no: gains only appear at about 100B parameters; smaller models write illogical chains and score lower.}
+\end{selftest}}

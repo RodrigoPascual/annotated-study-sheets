@@ -40,10 +40,10 @@ examples (\orig{exemplars}) in the prompt.
 \num{4}\ \textbf{Headline result}: PaLM 540B + just \textbf{eight} exemplars $\rightarrow$ state of the art on
 \textbf{GSM8K} (grade-school maths word problems), beating even GPT-3 \textbf{finetuned} on the task and checked by a
 \orig{verifier}.
-\begin{question}
-Three models or five? The abstract says three; §3.1 uses five (GPT-3, LaMDA, PaLM, UL2, Codex).
-The main figures show LaMDA, GPT and PaLM.
-\end{question}}
+\begin{selftest}
+Between standard and chain-of-thought prompting, what changes: the model, the question or the exemplars?
+\answer{only the exemplars: their answers now show the intermediate steps. Same model, same question, no training.}
+\end{selftest}}
 
 \block[y=160]{%
 \heading{Figure 1: the whole method}

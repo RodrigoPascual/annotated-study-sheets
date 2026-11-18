@@ -17,7 +17,7 @@ Install the skill, ask *“annotate this paper”* or *“make me a study deck a
 [**▶ Live demo: study deck**](https://rodrigopascual.github.io/annotated-study-sheets/examples/kan-explained/#5) ·
 [Install](#install) · [How it works](#how-it-works)
 
-<img src="docs/img/paper-spread-p1.png" alt="An annotated PDF page: the original paper page on the left with numbered pencil brackets and highlighter, a handwritten notes page on the right" width="900">
+<img src="docs/img/paper-spread-p1-v2.png" alt="An annotated PDF page: the original paper page on the left with numbered pencil brackets and highlighter, a handwritten notes page on the right" width="900">
 
 </div>
 
@@ -36,7 +36,7 @@ This skill gives every page or slide a second layer: the explanation a good teac
 - **Numbered pencil marks** on the parts that matter — brackets beside paragraphs, boxes around equations, badges on
   figure panels, highlighter on the 2–4 phrases to remember.
 - **A notes page** on dotted paper, in handwriting, **level with what it explains**: key idea, formulas symbol by symbol,
-  how to read each figure and table, “if someone asks” answers, pitfalls — and white space for your own notes.
+  how to read each figure and table, a “check yourself” question per page, pitfalls — and white space for your own notes.
 - **The original is never touched**: `paper.pdf` → a new `paper-annotated/paper-annotated.pdf`.
 - **Decks**: two versions in one file, clean for the audience, annotated for you. Toggle with **N**.
 
@@ -52,9 +52,9 @@ and equation, in the page's own order. A second file has the same pages one afte
 Example: the real **Chain-of-Thought Prompting** paper (Wei et al., 2022), pages 1–6 —
 [open the annotated PDF](https://rodrigopascual.github.io/annotated-study-sheets/examples/chain-of-thought-annotated/chain-of-thought-annotated.pdf).
 
-<img src="docs/img/demo-paper-pdf.gif" alt="Flipping through the annotated PDF of the Chain-of-Thought paper: each original page beside its handwritten notes page" width="900">
+<img src="docs/img/demo-paper-pdf-v2.gif" alt="Flipping through the annotated PDF of the Chain-of-Thought paper: each original page beside its handwritten notes page" width="900">
 
-<img src="docs/img/paper-spread-p4.png" alt="Page 4: Figure 3 with badges on each task family, the models table and the emergence result explained" width="900">
+<img src="docs/img/paper-spread-p4-v2.png" alt="Page 4: Figure 3 with badges on each task family, the models table and the emergence result explained" width="900">
 
 ### 2 · Study decks — new presentations with built-in speaker notes
 
@@ -64,11 +64,11 @@ Short, clean slides for the room; the depth lives in the sheet. Beamer-style sec
 figure zoom, editable notes. Example: **KAN: Kolmogorov-Arnold Networks** (Liu et al., 2024) explained in 12 slides with the
 paper's own figures — [open the demo](https://rodrigopascual.github.io/annotated-study-sheets/examples/kan-explained/#5).
 
-<img src="docs/img/demo-deck-v3.gif" alt="Pressing N on a slide: the slide moves left, pencil marks are drawn on it and a handwritten study sheet writes itself in" width="900">
+<img src="docs/img/demo-deck-v4.gif" alt="Pressing N on a slide: the slide moves left, pencil marks are drawn on it and a handwritten study sheet writes itself in" width="900">
 
 | Clean (what the audience sees) | Annotated (press **N**) |
 |---|---|
-| <img src="docs/img/deck-clean-v2.png" width="440"> | <img src="docs/img/deck-annotated-v2.png" width="440"> |
+| <img src="docs/img/deck-clean-v2.png" width="440"> | <img src="docs/img/deck-annotated-v3.png" width="440"> |
 
 ## Install
 
@@ -163,7 +163,7 @@ Full reference: [`annotate-pdf.md`](skills/annotated-study-sheets/references/ann
     (1) Read it right to left: compute the slope, scale it by η, subtract it.
     f: w_{t+1} = w_{t} − η · ∇L(w_{t})
     (2) η is chosen by us, not learned.
-    ?? Why not jump straight to the minimum? We only know the local slope.
+    ?? The loss jumps up and down and never settles. What do you change? Make η smaller: the steps overshoot.
     → How big should the step be?
   </aside>
 </section>
@@ -175,7 +175,7 @@ Full reference: [`annotate-pdf.md`](skills/annotated-study-sheets/references/ann
 | `! …` | **Key idea** box |
 | `(1) …` | block with red badge 1, linked to `data-n="1"` on the slide |
 | `> …` | **From the literature** box |
-| `?? …` | **If asked** box |
+| `?? Question? Answer.` | **Check yourself** box (answer hidden until clicked) |
 | `warn:` `ex:` `f:` | **Watch out!**, **Example**, **Formula** boxes |
 | `\| a \| b \|` | small table |
 | `→ …` | what comes next |

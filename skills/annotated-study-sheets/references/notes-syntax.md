@@ -11,7 +11,7 @@ Indentation is ignored. A blank line closes the current block. The same text is 
 | `- text` | bullet inside the current block |
 | `-- text` | sub-bullet |
 | `> text` | **From the literature** — blue box: the source that backs a claim |
-| `?? text` | **If asked** — green box: likely question + short answer |
+| `?? Question? Answer.` | **Check yourself**: self-test box, the question and then the answer, blurred until clicked |
 | `warn: text` (or `ojo:`) | **Watch out!** — red box |
 | `ex: text` (or `ej:`) | **Example** — green box |
 | `f: text` | **Formula** — purple box |
@@ -49,7 +49,7 @@ f: w ← w − η · ∇L(w)
 | 0.0001 | slow |
 | 1.0 | diverges |
 > Kingma & Ba (2015): Adam adapts the step size of every parameter.
-?? What value should I try first? 0.001 with Adam, then adjust by factors of 10.
+?? The loss jumps up and down and never settles. Which way do you change η? Make it smaller: the steps overshoot the minimum.
 
 → Momentum and Adam.
 ```
@@ -57,5 +57,5 @@ f: w ← w − η · ∇L(w)
 ## Good notes, in one paragraph
 
 Explain what each numbered element *is*, how to *read* it and *why* it matters; define jargon on first use; keep numbers
-exact; put the single takeaway in `!`; prepare the one or two questions an audience or examiner will ask with `??`;
+exact; put the single takeaway in `!`; end with one `??` self-test question (apply, compare, predict, explain why) whose answer follows the first `? `;
 cite with `>` instead of copying text. Aim for 8–14 lines per slide so the sheet fits one screen.

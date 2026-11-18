@@ -1,7 +1,7 @@
 {
   "name": "annotated-study-sheets",
-  "version": "1.0.0",
-  "description": "Claude Code skill: Annotated study sheets for papers, PDFs, web pages and slides, and offline HTML decks with a handwritten study sheet that appears with the N key.",
+  "version": "1.1.0",
+  "description": "Claude Code skill: annotated PDF study guides (each original page beside a handwritten notes page, pencil marks on the original) and offline HTML study decks whose notes appear with the N key.",
   "author": {
     "name": "Rodrigo Pascual-García",
     "url": "https://github.com/RodrigoPascual"
@@ -17,6 +17,8 @@
     "presentation",
     "papers",
     "pdf",
+    "annotated-pdf",
+    "latex",
     "education",
     "notes"
   ]

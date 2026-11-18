@@ -20,7 +20,6 @@ Canvas: 1600 × 900 px, scaled to the window. Every slide is a `<section class="
 | `slide cover` | title slide, no bars: `.left` (h1, `.tagline`, `.author`, `.affil`) + optional `.right` visual |
 | `slide chapter` | section divider: `<h2><span class="kicker">Part 2</span>Title</h2>` + `<p class="question">` |
 | `slide` | normal content slide: `<header class="head"><h2>…</h2><p class="sub">…</p></header>` + `.content` |
-| `slide page` | annotated document page: a single `figure.fig > .frame > img[data-zones]`, no bars |
 
 ## Content building blocks
 
@@ -46,7 +45,7 @@ Canvas: 1600 × 900 px, scaled to the window. Every slide is a `<section class="
 - `data-mark="box"` (red pencil box), `"formula"` (purple), `"green"`, `"badge"`, `"bracket"`, `"corner"` override the default.
 - `img[data-zones="2:0,0,50,48; 3:50,0,100,48:box"]` — regions of an image in % (x0,y0,x1,y1), optional `:box|:formula|:green`.
 - Boxes put their badge on the left edge; add `-r`, `-t` or `-b` to move it right, above or below (`:box-r`, `:formula-t`, `data-mark="box-r"`). Use it on two-column pages so the badge does not cover the neighbouring column.
-- Number 1, 2, 3… top-to-bottom, left-to-right; 2–4 marks per slide, 2–6 per document page.
+- Number 1, 2, 3… top-to-bottom, left-to-right; 2–4 marks per slide.
 
 ## `window.STUDY` options
 
@@ -58,8 +57,8 @@ Canvas: 1600 × 900 px, scaled to the window. Every slide is a `<section class="
 | `hideInBar` | `[]` | section names left out of the top bar (e.g. `['Intro', 'References']`) |
 | `short` | `{}` | short names for the section tabs of the sheet |
 | `colorize` | `[]` | `[{ match, color }]` terms coloured automatically in the notes |
-| `openSheet` | `false` | open with the study sheet already showing (good for annotated documents) |
-| `size` | `[1600, 900]` | canvas in px; annotated documents use a portrait `[1000, 1300]` so a whole page fills the height |
+| `openSheet` | `false` | open with the study sheet already showing |
+| `size` | `[1600, 900]` | canvas in px (e.g. `[1000, 1300]` for a portrait deck) |
 
 URL options: `index.html#7` opens slide 7; `index.html?notes#7` opens it with the sheet.
 

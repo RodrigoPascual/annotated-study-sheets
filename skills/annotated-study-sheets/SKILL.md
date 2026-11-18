@@ -1,91 +1,95 @@
 ---
 name: annotated-study-sheets
-description: Turn a paper, PDF, web page or slide deck into an annotated study sheet — the original on the left with hand-drawn numbered marks, a handwritten-style explanation sheet on the right that writes itself in — or build a new HTML presentation with a clean version and an annotated version toggled with the N key. Use when the user wants to study, explain, annotate, review or present a document; asks for "annotated", "study notes", "explain this paper/slides", "study guide", "speaker notes", or wants a self-contained offline HTML talk.
+description: Make an annotated study copy of a paper, article, PDF or slide deck — a new PDF where every original page sits next to a handwritten-style notes page, with numbered pencil marks, highlighter and boxes drawn on the original — or build a new offline HTML presentation with a clean version and an annotated version toggled with the N key. Use when the user wants to study, explain, annotate or review a document ("annotate this paper", "study guide", "explain this PDF page by page", "notes next to each page") or wants a study deck / talk with speaker notes.
 ---
 
 # Annotated Study Sheets
 
-Two deliverables, one engine (`assets/study.js` + `assets/study.css`, no dependencies, works from `file://`):
+Two deliverables, two engines. Never write your own styling for either: the look lives in the engine files.
 
-1. **Annotated document** — a PDF / paper / web page / existing presentation turned into page images, each with numbered
-   pencil marks on the regions that matter and a study sheet that explains them.
-2. **Study deck** — a new 16:9 HTML presentation. Plain slides for the audience; press **N** and the slide slides left,
-   pencil brackets and badges are drawn on it, the highlighter sweeps the key phrase and a dotted-paper sheet with
-   handwritten notes writes itself in on the right. Hover a numbered block → a pencil arrow points at its element.
+1. **Annotated PDF** (papers, articles, reports, any PDF; slides exported to PDF) → `<name>-annotated.pdf`.
+   Every page of the output is a spread: the **original page on the left, untouched**, with numbered pencil brackets,
+   badges, highlighter and hand-drawn boxes on top of it, and a **notes page on the right** (dotted paper, handwriting,
+   coloured boxes) whose blocks sit beside what they explain. Engine: `assets/pdf/studysheet.sty` (LuaLaTeX),
+   driven by `scripts/annotate_pdf.py`. **A PDF is annotated as a PDF, never converted to HTML.**
+2. **Study deck** (a new talk) → an offline HTML presentation. Plain 16:9 slides for the audience; press **N** and the
+   slide moves left, pencil marks are drawn on it and a handwritten sheet writes itself in on the right. Engine:
+   `assets/study.css` + `assets/study.js`, started with `scripts/new_study.py`.
 
-Both open with a double click, need no server, and include presenter view (P), overview (O), figure zoom (click),
-editable notes (E, saved in the browser or to `notes.js`) and Markdown export.
+## Never touch the original
 
-## The look is in the engine — copy it, never rewrite it
+Annotating an existing file always works on a copy in a new sibling folder named after it plus `-annotated`
+(`paper.pdf` → `paper-annotated/paper-annotated.pdf`; `talk/index.html` → `talk-annotated/`). Do not edit, rename,
+overwrite or delete the original or its folder. `annotate_pdf.py init` and `new_study.py --source` do this for you.
 
-The exact style (dotted paper, handwriting, red numbered badges, pencil brackets and boxes, highlighter sweep, notes that
-write themselves in, the pencil arrow, the Beamer-style bars) lives entirely in `assets/study.css` and `assets/study.js`.
-**Always start with the script, which copies both files byte for byte plus the right template:**
+## A. Annotate a PDF → annotated PDF
+
+Requirements: `pip install pymupdf` and LuaLaTeX (TeX Live or MiKTeX). If `lualatex` is missing, tell the user to
+install TeX Live (or MiKTeX on Windows) and stop; do not fall back to HTML.
+Word / PowerPoint / Keynote / web page → export or print to PDF first, into the `-annotated` folder.
+
+1. **Copy and set up:** `python scripts/annotate_pdf.py init paper.pdf [--lang es] [--pages 1-12]`
+   → `paper-annotated/` with `source/paper.pdf` (copy), `source/text.txt`, `studysheet.sty`, `main.tex`, `notes/pNN.tex`.
+2. **Read the whole document** (`source/text.txt`, and look at the pages) before writing anything. In `main.tex`, set
+   `\StudySections{key/Label,...}` (the section pills of the header) and the footer.
+3. **For each page, in order:**
+   - `annotate_pdf.py anchors paper-annotated N --png` (and `--lines`, `--find "text"`): positions in mm from the
+     page's top-left corner; look at `review/orig_pNN.png`.
+   - List every element top to bottom (paragraph groups, figure panels, tables, equations) and number them 1, 2, 3…
+   - Write `notes/pNN.tex`: marks on the original (`\bracket`, `\badge`, `\highlight`, `\pencilbox`, `\ring`) and
+     one `\block[y=…]` per element, starting with `\num{n}`, at the height of what it explains.
+   - `annotate_pdf.py build paper-annotated -p N --png`; the report must end in `OK`. **Open `review/pNN.png`**: every
+     mark on its target, nothing crowded, 45–75 % of the notes page used. Fix and rebuild until it looks clean.
+4. **Build everything:** `annotate_pdf.py build paper-annotated` → `paper-annotated.pdf` (spreads) and
+   `paper-annotated-two-page.pdf` (original, notes, original, notes… for A4 printing). Give the user the path.
+
+Macros, options and a full notes file: `references/annotate-pdf.md`. Example: `examples/chain-of-thought-annotated/`.
+
+### What to write on a notes page
+
+- **Explain, do not translate or paraphrase**: say what each element is, how to read it and why it matters, in short
+  sentences and simple words; define each term the first time.
+- **A figure**: what it shows, how to read it (axes, units, colours, markers, panels), the one comparison to look at.
+  **A table**: rows, columns, the 1–3 numbers that matter. **An equation**: each symbol, the intuition, a tiny toy
+  example when it helps (labelled as toy numbers).
+- One `keyidea` per page (two at most); `question` ("If someone asks") only where it really helps; `warning` for
+  easy confusions; `\orig{...}` for a term exactly as printed, so the reader can map your words to the original.
+- **Numbers are sacred**: exactly as printed on the left page; never invent or recompute results.
+- Leave white space: the dotted paper is also for the reader's own notes.
+- Write in the user's language (`--lang es` for Spanish labels).
+
+## B. Build a new study deck (HTML)
 
 ```bash
-python scripts/new_study.py deck     OUT_DIR --title "Talk title" --author "Name · Group"
-python scripts/new_study.py document OUT_DIR --title "Paper title" --author "Annotated by Name"
+python scripts/new_study.py deck OUT_DIR --title "Talk title" --author "Name · Group" [--lang es]
+python scripts/new_study.py deck --source talk/index.html     # add notes to an existing HTML talk -> talk-annotated/
 ```
 
-Then only write slide HTML and notes. Do not edit, inline, minify or "improve" `study.css` / `study.js`, do not add other
-CSS frameworks, and do not restyle the sheet: per-deck tweaks go in a small `<style>` block using the CSS variables listed
-in `references/slide-layouts.md`. Working examples to imitate: `examples/kan-explained/` (deck) and
-`examples/chain-of-thought/` (annotated paper) in the repository.
+The script copies `study.css` and `study.js` byte for byte plus the template. Then only write slide HTML and notes:
+do not edit, inline or "improve" the engine, do not add CSS frameworks, do not restyle the sheet (per-deck tweaks go in
+a small `<style>` block with the CSS variables in `references/slide-layouts.md`). Example: `examples/kan-explained/`.
 
-**If you cannot run scripts or copy files** (a chat-only assistant that read this skill from a link), still do not
-write CSS or JS. Use the template as is and load the engine from the CDN with exactly:
+1. Outline: sections → slides, one message per slide. Slide content stays **short** (≤ 4 bullets, ≤ 12 words each,
+   figures large); the depth goes into the notes.
+2. Mark the elements the notes talk about with `data-n="1"`, `data-n="2"`… top to bottom (2–4 per slide); panels of an
+   image use `data-zones="n:x0,y0,x1,y1"` (percent of the image). At most one `<span class="hl">` per slide.
+3. Write the notes of every slide in `<aside class="notes">` (markup below).
+4. Check: open `index.html?notes#1` (or a headless screenshot): badges on target, the sheet does not overflow.
+
+**Chat-only assistants** (no scripts, no file copies): still never write CSS/JS for a deck. Use
+`assets/deck-template.html` as is; it loads the engine from the CDN when the local files are missing:
 
 ```html
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/RodrigoPascual/annotated-study-sheets@v1/skills/annotated-study-sheets/assets/study.css">
 <script src="https://cdn.jsdelivr.net/gh/RodrigoPascual/annotated-study-sheets@v1/skills/annotated-study-sheets/assets/study.js"></script>
 ```
 
-The templates already fall back to these URLs when `study.css` / `study.js` are missing. A page with its own
-`<style>` theme, its own slide/keyboard script or hand-placed badge `<button>`s is **wrong** — redo it with the engine.
+For a PDF they cannot compile, they write the `notes/pNN.tex` files (section 3 of `references/annotate-pdf.md`) and the
+user runs `annotate_pdf.py build`.
 
-## Never touch the original
+Layouts, classes and configuration: `references/slide-layouts.md`. Notes syntax with examples: `references/notes-syntax.md`.
 
-When annotating an existing file (PDF, paper, web page, slides, an existing HTML talk), **work on a copy**:
-everything goes into a new sibling folder named after the original plus `-annotated`
-(`paper.pdf` → `paper-annotated/`, `talk.pptx` → `talk-annotated/`, `slides/index.html` → `slides-annotated/`).
-Do not edit, rename, overwrite or delete the original file or its folder. `new_study.py --source` does this for you and
-keeps a copy of the original in `<name>-annotated/source/`.
-
-## Workflow
-
-### A. Annotate an existing document
-
-1. **Create the copy:** `python scripts/new_study.py document --source input.pdf` → `input-annotated/` (engine,
-   template and `source/input.pdf`). The original is not modified.
-2. **Get page images** into that folder: `python scripts/pdf_to_pages.py input.pdf input-annotated/pages` (needs `pymupdf`).
-   Show **whole pages** by default; use `--halves` only if a page is too dense to read. The script prints every text block
-   with its position in % — use those numbers for the zones.
-   - Web page / HTML: print it to PDF inside the `-annotated` folder (headless Chrome `--print-to-pdf`), then as above.
-   - PowerPoint / Keynote / Google Slides: export to PDF inside the `-annotated` folder, then as above.
-3. **Read the document fully** (text from the script output, or the PDF itself) before writing any note.
-4. **One `<section class="slide page">` per page image** (two slides showing the same page if one sheet is not enough). Put marks on 2–6 regions with
-   `data-zones="n:x0,y0,x1,y1"` (percent of the image). Add `:box` to draw a pencil box, `:formula` for a purple box
-   around an equation, `:green` for a green box; without a suffix only the numbered badge is drawn at the region's corner.
-   Add `-r`/`-t`/`-b` to place a box's badge on the right, top or bottom (e.g. `:box-r`) when the left side is busy.
-5. **Write the notes** in `<aside class="notes">` with the markup below: one `(n)` block per zone, in reading order.
-6. Set `window.STUDY.openSheet = true` so it opens annotated; N shows the clean page.
-7. **Check it**: open `index.html?notes#1` in a browser (or headless screenshot) and confirm that every badge sits on
-   its region and nothing overflows the sheet. Fix zones by nudging the percentages.
-
-### B. Build a new study deck (or add notes to an existing HTML talk)
-
-To add study notes to a talk that already exists, copy it first to `<name>-annotated/` and work only in the copy.
-
-1. **Create the project:** `python scripts/new_study.py deck OUT --title "…"`. Outline: sections → slides, one message per slide.
-2. Slide content stays **short** (≤ 4 bullets, ≤ 12 words each, figures large). The depth goes into the notes.
-3. Mark the elements the notes talk about with `data-n="1"`, `data-n="2"`… top to bottom (2–4 per slide). Panels of an
-   image use `data-zones` as above. Wrap at most one phrase per slide in `<span class="hl">` (highlighter, only in N).
-4. Write the notes for every slide (see below). Then render and check as in A.7.
-
-Layouts, classes and configuration: `references/slide-layouts.md`. Full notes syntax with examples: `references/notes-syntax.md`.
-Annotating documents in depth (zones, page halves, what to explain): `references/annotate-documents.md`.
-
-## Notes markup (inside `<aside class="notes">`)
+## Deck notes markup (inside `<aside class="notes">`)
 
 ```
 # Title of the sheet
@@ -100,7 +104,7 @@ f: the formula, written plainly (purple box).    | table | rows |  (first row = 
 ```
 Inline: `**bold**`, `==highlight==`, `*italic*`, `[2]` (small badge pointing to element 2), `x_{i}`, `x^{2}`.
 
-## Writing the explanation — the part that matters
+## Writing deck notes — the part that matters
 
 - **Explain, do not paraphrase.** Each `(n)` block says what the element is, how to read it (axes, units, colours, symbols)
   and why it matters. Define every term the first time it appears.
@@ -108,14 +112,19 @@ Inline: `**bold**`, `==highlight==`, `*italic*`, `[2]` (small badge pointing to 
 - **Anticipate questions** with `??` and give the short answer you would say aloud.
 - **Numbers are sacred**: copy figures exactly from the source; never invent results. If something is your inference, say so.
 - **Cite, do not copy**: quote at most a short phrase; summarise in your own words; `>` boxes name the source.
-- Keep each sheet to what fits one screen (≈ 8–14 lines of notes). Split into two slides/page halves rather than overflow.
+- Keep each sheet to what fits one screen (≈ 8–14 lines of notes). Split into two slides rather than overflow.
 - Match the user's language: set `lang: 'es'` for Spanish UI labels; write the notes in the user's language.
 - Style: informal but rigorous, short bullets; no decorative coloured boxes on the slides themselves — colour lives in the sheet.
 
 ## Output checklist
 
+Annotated PDF:
+- [ ] `<name>-annotated/<name>-annotated.pdf` (+ `-two-page.pdf`); the original file untouched (same bytes, same place).
+- [ ] Every annotated page has its notes; every number marked on the original has its `\num{n}` block, and vice versa.
+- [ ] The last build report ends in `OK`; each `review/pNN.png` checked by eye.
+
+Study deck:
 - [ ] Folder with `index.html`, `study.css`, `study.js` and the images; opens offline with a double click.
-- [ ] Annotating an existing file: output in `<name>-annotated/`, original untouched (same bytes, same place).
-- [ ] Every slide/page has notes; every `(n)` has a matching `data-n` or zone, and vice versa.
+- [ ] Every slide has notes; every `(n)` has a matching `data-n` or zone, and vice versa.
 - [ ] Rendered at 1920×1080 with `?notes`: badges on target, sheet not overflowing, no text cut off.
 - [ ] Tell the user the keys: **N** sheet · **E** edit · **P** presenter · **O** overview · **?** help.

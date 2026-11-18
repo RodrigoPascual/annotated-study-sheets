@@ -6,13 +6,13 @@
   },
   "metadata": {
     "description": "Claude Code skill — study anything with hand-annotated sheets.",
-    "version": "1.0.0"
+    "version": "1.1.0"
   },
   "plugins": [
     {
       "name": "annotated-study-sheets",
       "source": "./",
-      "description": "Claude Code skill: Annotated study sheets for papers, PDFs, web pages and slides, and offline HTML decks with a handwritten study sheet (N key).",
+      "description": "Claude Code skill: annotated PDF study guides (each original page beside a handwritten notes page) and offline HTML study decks (N key).",
       "category": "productivity"
     }
   ]

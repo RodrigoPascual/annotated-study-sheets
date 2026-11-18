@@ -1,0 +1,55 @@
+%% Page 6: the rest of the ablation (Figure 5) and robustness to the exemplars (Figure 6).
+\crumbs{§3.3 Ablation \,›\, Figure~5 \,›\, §3.4 Robustness \,›\, Figure~6}
+\insection{ablation,rest}
+
+%% ---- marks on the original page
+\bracket{1}{26.7}{108.1}
+\badge{2}{32.5}{28.0}
+\badge{3}{32.5}{72.3}
+\highlight[hlpink]{113.0}{49.4}{125.4}{52.8}
+\highlight[hlpink]{38.1}{53.2}{82.4}{56.7}
+\highlight[hlpink]{38.1}{97.4}{95.4}{101.0}
+\badge{4}{32.5}{126.7}
+\bracket{5}{119.6}{218.5}
+\bracket{6}{221.1}{232.4}
+
+\block[y=27]{%
+\heading{Figure 5: which ingredient matters?}
+An \textbf{ablation} swaps out one ingredient at a time to see which one causes the effect.
+\num{1}\ GSM8K solve rate for LaMDA 137B and PaLM 540B, five prompt variants: only the last bar
+(chain of thought) stands out.}
+
+\block{%
+\num{2}\ \textbf{Variable compute only}: the model writes dots (\ldots) as long as the equation, then answers.
+It \hl[hlpink]{performs about the same as the baseline}: more tokens alone are not the reason.}
+
+\block[y=71]{%
+\num{3}\ \textbf{Chain of thought after the answer}: also about the same as the baseline. The reasoning has to come
+\textbf{first} and lead to the answer; it is not just ``activating knowledge''.
+\begin{keyidea}
+Not the equation, not extra tokens, not reasoning after the fact: the natural-language steps \textbf{before} the
+answer are what help.
+\end{keyidea}}
+
+\block[y=118]{%
+\num{4}\ \textbf{§3.4 Robustness}: prompts are known to be sensitive to the exact examples. So three people
+(annotators A, B, C) each wrote their own chains of thought for the same exemplars; B and C did not see A's.}
+
+\block{%
+\num{5}\ \textbf{Figure 6} (LaMDA 137B, GSM8K and MAWPS): every chain-of-thought variant beats standard prompting by
+a large margin. There is variance between writers, as expected for any prompt, but the gain is never lost.
+\begin{example}
+Annotator A wrote several short sentences; a deliberately concise style (footnote 1) still works.
+\end{example}}
+
+\block[y=221]{%
+\num{6}\ Also tested with exemplars taken from GSM8K's own training set: the gains hold, so they are not an
+artefact of one writer.}
+
+\block{%
+\begin{summary}
+Pages 1--6: write the reasoning before the answer, in words, in a few examples, and a large enough model will
+reason too.
+\end{summary}
+\grey{Wei, J. et al. (2022). Chain-of-Thought Prompting Elicits Reasoning in Large Language Models. arXiv:2201.11903,
+CC BY 4.0. Original pages reproduced unmodified; marks and notes added.}}

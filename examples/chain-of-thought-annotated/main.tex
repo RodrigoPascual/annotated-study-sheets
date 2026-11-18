@@ -1,0 +1,18 @@
+%% main.tex: annotated study copy of chain-of-thought.pdf
+%% Build: python <skill>/scripts/annotate_pdf.py build "chain-of-thought-annotated"
+%% Edit the sections (pills in the header), the footer and the language here; write the notes in notes/pNN.tex.
+\documentclass{article}
+\usepackage[paperwidth=431.800mm, paperheight=279.400mm, margin=0pt]{geometry}
+\usepackage[en]{studysheet}
+\StudyPDF{source/chain-of-thought.pdf}
+\StudyPageSize{215.900}{279.400}
+\StudyTotal{43}
+\StudyBracketX{183.1}
+%% key/Label pairs, in reading order; each notes file lights up its own with \insection{key,...}
+\StudySections{abs/Abstract,intro/1 Introduction,method/2 Method,setup/3.1 Setup,results/3.2 Results,ablation/3.3 Ablation,rest/3.4--6 \& Appendix}
+\StudyFooter{Chain-of-Thought Prompting (Wei et al., 2022) · annotated study copy · numbers as printed in the original}
+\pagestyle{empty}\setlength\parindent{0pt}\setlength\parskip{0pt}\setlength\topskip{0pt}
+\InputIfFileExists{selection}{}{\def\studyselection{1,2,3,4,5,6}}
+\begin{document}
+\expandafter\StudyPages\expandafter{\studyselection}
+\end{document}

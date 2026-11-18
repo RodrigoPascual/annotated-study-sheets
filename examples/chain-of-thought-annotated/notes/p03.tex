@@ -1,0 +1,71 @@
+%% Page 3: why the name, the four properties, and the arithmetic setup (§3.1).
+\crumbs{§2 Four attractive properties \,›\, §3 Arithmetic reasoning \,›\, 3.1 Experimental setup}
+\insection{method,setup}
+
+%% ---- marks on the original page
+\bracket{1}{35.9}{58.6}
+\bracket{2}{70.9}{82.1}
+\bracket{3}{83.3}{98.4}
+\bracket{4}{99.6}{110.8}
+\bracket{5}{112.0}{123.2}
+\bracket{6}{139.5}{171.2}
+\bracket{7}{184.0}{208.6}
+\bracket{8}{210.9}{226.0}
+\bracket{9}{228.2}{254.8}
+\highlight{101.7}{70.9}{142.3}{74.4}
+\highlight{105.4}{83.3}{134.8}{86.8}
+\highlight[hlpink]{103.2}{94.9}{139.0}{98.4}
+\highlight[hlgreen]{72.5}{107.3}{134.8}{110.8}
+\highlight{110.8}{112.0}{131.7}{115.5}
+\highlight[hlpink]{155.0}{243.6}{177.8}{247.2}
+\highlight[hlpink]{38.1}{247.5}{65.6}{251.0}
+
+\block[y=36]{%
+\num{1}\ \textbf{Why ``chain of thought'' and not ``solution''}: it reads like a worked solution, but it is produced
+\textbf{before} the answer and imitates step-by-step thinking.}
+
+\block[y=62]{%
+\heading{Four reasons it is attractive}
+\num{2}\ \textbf{Decomposition}: a multi-step problem becomes intermediate steps, so harder problems get
+\textbf{more computation} (more tokens written).}
+
+\block[y=83.3]{%
+\num{3}\ \textbf{Interpretability}: we see \textbf{how} the answer was reached and can debug where it went wrong.
+\begin{warning}
+The paper itself says fully characterising the model's computations \hl[hlpink]{\orig{remains an open question}}:
+the written chain is not guaranteed to be what the model actually computed.
+\end{warning}}
+
+\block{%
+\num{4}\ \textbf{Generality}: maths, commonsense, symbols, in principle \textbf{any task people solve in words}.\quad
+\num{5}\ \textbf{Cheap}: off-the-shelf large models, just add exemplars to the prompt.}
+
+\block{%
+\begin{question}
+Is the extra computation of property \num{2} why it works? The ablation on page 6 says \textbf{no}: dots instead of
+words do not help.
+\end{question}}
+
+\block[y=139.5]{%
+\num{6}\ \textbf{§3 Arithmetic first}: simple for people, hard for language models. Claim: the 540B model + chain
+of thought $\approx$ \textbf{task-specific finetuned} models, and a new state of the art on GSM8K.}
+
+\block[y=184]{%
+\num{7}\ \textbf{Five maths benchmarks}:
+\begin{smalltable}{>{\bfseries}l l}
+GSM8K & multi-step word problems, the hardest here \\
+SVAMP & problems with varying structures \\
+ASDiv & diverse problems \\
+AQuA & algebraic, \textbf{multiple choice} \\
+MAWPS & a mix of simpler problems \\
+\end{smalltable}}
+
+\block[y=211]{%
+\num{8}\ \textbf{Baseline = standard prompting}: question/answer exemplars, the model answers directly (Figure 1, left).}
+
+\block[y=228.2]{%
+\num{9}\ \textbf{Proposed}: the same exemplars, each with a chain of thought. \textbf{Eight}, written by hand (most
+datasets only have an evaluation split); full set in Appendix Table 20.
+\begin{arrows}
+  \item They \hl[hlpink]{\orig{did not undergo prompt engineering}}: robustness to other writers is tested in §3.4.
+\end{arrows}}

@@ -1,0 +1,60 @@
+%% Page 4: Figure 3 (one exemplar per task family), the models, and the first result (emergence).
+\crumbs{§3.1 Setup \,›\, Figure~3: exemplars per task \,›\, Language models \,›\, §3.2 Results}
+\insection{setup,results}
+
+%% ---- marks on the original page
+\badge{1}{35.5}{27.7}
+\badge{2}{139.8}{27.7}
+\badge{3}{35.5}{102.3}
+\ring[ok]{115.6}{54.3}{121.1}{57.0}
+\bracket{4}{154.3}{165.5}
+\bracket{5}{167.7}{213.6}
+\bracket{6}{219.9}{254.1}
+\highlight[hlpink]{151.0}{239.0}{177.9}{242.6}
+\highlight[hlpink]{38.1}{242.9}{90.5}{246.4}
+\highlight[hlgreen]{163.9}{242.9}{177.8}{246.4}
+\highlight[hlgreen]{38.1}{246.6}{64.5}{250.2}
+
+\block[y=26]{%
+\heading{Figure 3: one exemplar per task}
+\begin{keyidea}
+The format never changes, only what the reasoning talks about. The highlighted text in each box is the chain of thought.
+\end{keyidea}
+\num{1}\ \textbf{Arithmetic} (the only family used in §3): free response (the Figure 1 problem) and multiple choice:
+$9+90(2)+401(3)=1392$ $\rightarrow$ (b) \green{(circled)}.}
+
+\block{%
+\num{2}\ \textbf{Commonsense}: CSQA (top right), StrategyQA, Date and Sports understanding (middle row). The chain
+recalls a fact (a pear is about $0.6\ \mathrm{g/cm^3}$, less than water) and then concludes.}
+
+\block[y=100]{%
+\num{3}\ \textbf{Bottom row}:
+\begin{points}
+  \item SayCan (robot): an explanation, then a 5-step plan;
+  \item symbolic: last letters of ``Lady Gaga'' $\rightarrow$ ``ya''; coin flip = keep track of the state
+        (flipped once, odd $\rightarrow$ tails).
+\end{points}
+Commonsense is §4 and symbolic §5 of the paper; full prompts in Appendix G.}
+
+\block[y=154]{%
+\num{4}\ The \textbf{same 8 exemplars} for every maths benchmark except AQuA (multiple choice): 4 exemplars from its
+training set (Appendix Table 21).}
+
+\block[y=168]{%
+\num{5}\ \textbf{Five model families}, several sizes each:
+\begin{smalltable}{>{\bfseries}l l}
+GPT-3 (InstructGPT) & 350M, 1.3B, 6.7B, 175B \\
+LaMDA & 422M, 2B, 8B, 68B, 137B \\
+PaLM & 8B, 62B, 540B \\
+UL2 \quad Codex & 20B \quad code-davinci-002 \\
+\end{smalltable}
+\textbf{Greedy decoding} (always the most likely next token). LaMDA: average over 5 random orders of the
+exemplars; one order for the others (little variance).}
+
+\block[y=222]{%
+\num{6}\ \textbf{Takeaway 1: an emergent ability.} Chain of thought \hl[hlpink]{does not help small models} and only
+pays off with models of \hl[hlgreen]{about 100B parameters}.
+\begin{warning}
+Small models wrote fluent but illogical chains and did \textbf{worse} than standard prompting: this is not a trick
+for small models.
+\end{warning}}

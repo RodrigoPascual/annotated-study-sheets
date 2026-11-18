@@ -4,23 +4,23 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Annotated Study Sheets — annotate papers, PDFs and slides with AI (Claude Code skill)</title>
-<meta name="description" content="Annotated Study Sheets: an Agent Skill for Claude Code that turns papers, PDFs and slides into hand-annotated study notes, and builds offline HTML presentations where pressing N reveals the study sheet behind every slide.">
-<meta name="keywords" content="Claude Code skill, Agent Skills, Claude skills, annotate PDF, study notes, study guide, annotated paper, HTML presentation, slides, speaker notes, AI study tool, reveal.js alternative">
+<meta name="description" content="Annotated Study Sheets: an Agent Skill for Claude Code that turns papers and PDFs into annotated PDF study guides, and builds offline HTML presentations where pressing N reveals the study sheet behind every slide.">
+<meta name="keywords" content="Claude Code skill, Agent Skills, Claude skills, annotate PDF, annotated PDF, study notes, study guide, annotated paper, HTML presentation, slides, speaker notes, AI study tool, reveal.js alternative">
 <meta name="author" content="Rodrigo Pascual-García">
 <link rel="canonical" href="https://rodrigopascual.github.io/annotated-study-sheets/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Annotated Study Sheets">
 <meta property="og:title" content="Annotated Study Sheets — Claude Code skill for hand-annotated study notes on papers, PDFs and slides">
-<meta property="og:description" content="Annotated Study Sheets: an Agent Skill for Claude Code that turns papers, PDFs and slides into hand-annotated study notes, and builds offline HTML presentations where pressing N reveals the study sheet behind every slide.">
+<meta property="og:description" content="Annotated Study Sheets: an Agent Skill for Claude Code that turns papers and PDFs into annotated PDF study guides, and builds offline HTML presentations where pressing N reveals the study sheet behind every slide.">
 <meta property="og:url" content="https://rodrigopascual.github.io/annotated-study-sheets/">
 <meta property="og:image" content="https://rodrigopascual.github.io/annotated-study-sheets/docs/img/deck-annotated-v2.png">
 <meta property="og:image:width" content="1440"><meta property="og:image:height" content="810">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Annotated Study Sheets — Claude Code skill for hand-annotated study notes on papers, PDFs and slides">
-<meta name="twitter:description" content="Annotated Study Sheets: an Agent Skill for Claude Code that turns papers, PDFs and slides into hand-annotated study notes, and builds offline HTML presentations where pressing N reveals the study sheet behind every slide.">
+<meta name="twitter:description" content="Annotated Study Sheets: an Agent Skill for Claude Code that turns papers and PDFs into annotated PDF study guides, and builds offline HTML presentations where pressing N reveals the study sheet behind every slide.">
 <meta name="twitter:image" content="https://rodrigopascual.github.io/annotated-study-sheets/docs/img/deck-annotated-v2.png">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"SoftwareSourceCode","name":"Annotated Study Sheets","description":"Annotated Study Sheets: an Agent Skill for Claude Code that turns papers, PDFs and slides into hand-annotated study notes, and builds offline HTML presentations where pressing N reveals the study sheet behind every slide.","codeRepository":"https://github.com/RodrigoPascual/annotated-study-sheets","programmingLanguage":["JavaScript","HTML","CSS","Python"],"license":"https://opensource.org/licenses/MIT","author":{"@type":"Person","name":"Rodrigo Pascual-García"},"keywords":"Claude Code skill, Agent Skills, annotate PDF, study notes, HTML presentation"}
+{"@context":"https://schema.org","@type":"SoftwareSourceCode","name":"Annotated Study Sheets","description":"Annotated Study Sheets: an Agent Skill for Claude Code that turns papers and PDFs into annotated PDF study guides, and builds offline HTML presentations where pressing N reveals the study sheet behind every slide.","codeRepository":"https://github.com/RodrigoPascual/annotated-study-sheets","programmingLanguage":["JavaScript","HTML","CSS","Python"],"license":"https://opensource.org/licenses/MIT","author":{"@type":"Person","name":"Rodrigo Pascual-García"},"keywords":"Claude Code skill, Agent Skills, annotate PDF, annotated PDF, study notes, HTML presentation"}
 </script>
 <style>
   :root { --ink: #22304A; --accent: #1F5FA8; --red: #C62828; --paper: #FFFDF6; --dots: #D6D0C2; }
@@ -42,12 +42,12 @@
 <body>
 <main>
   <h1>✎ Annotated Study Sheets</h1>
-  <p class="lead"><b>A Claude Code skill</b> (Agent Skill, works with any agent that reads <code>SKILL.md</code>) that turns papers, PDFs and slides into hand-annotated study sheets — and builds offline HTML decks where <kbd>N</kbd> reveals the study sheet.</p>
+  <p class="lead"><b>A Claude Code skill</b> (Agent Skill, works with any agent that reads <code>SKILL.md</code>) that turns papers and PDFs into an annotated PDF — every original page beside a handwritten notes page, with pencil marks on the original — and builds offline HTML decks where <kbd>N</kbd> reveals the study sheet.</p>
   <div class="grid">
     <a class="card" href="examples/kan-explained/index.html#5"><img src="docs/img/deck-annotated-v2.png" alt="Study deck example">
       <div><b>Study deck →</b><br>“KAN: Kolmogorov-Arnold Networks” explained in 12 slides. Press <kbd>N</kbd> on any slide.</div></a>
-    <a class="card" href="examples/chain-of-thought/index.html#2"><img src="docs/img/paper-page1-v4.png" alt="Annotated paper example">
-      <div><b>Annotated paper →</b><br>“Chain-of-Thought Prompting” (Wei et al., 2022), explained region by region. Press <kbd>N</kbd> for the clean page.</div></a>
+    <a class="card" href="examples/chain-of-thought-annotated/chain-of-thought-annotated.pdf"><img src="docs/img/paper-spread-p1.png" alt="Annotated PDF example: original page beside its notes page">
+      <div><b>Annotated paper (PDF) →</b><br>“Chain-of-Thought Prompting” (Wei et al., 2022), pages 1–6: each original page beside its notes page.</div></a>
   </div>
   <p class="note">Install and docs: <a href="https://github.com/RodrigoPascual/annotated-study-sheets">github.com/RodrigoPascual/annotated-study-sheets</a></p>
 </main>

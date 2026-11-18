@@ -1,0 +1,55 @@
+%% Page 5: Figure 4 (scaling curves), takeaways 2 and 3, error analysis, start of the ablation.
+\crumbs{§3.2 Results \,›\, Figure~4: gains appear with scale \,›\, Error analysis \,›\, §3.3 Ablation}
+\insection{results,ablation}
+
+%% ---- marks on the original page
+\bracket{1}{26.7}{167.7}
+\badge{2}{32.5}{28.0}
+\badge{3}{32.5}{68.4}
+\badge{4}{32.5}{116.6}
+\bracket{5}{202.3}{221.4}
+\bracket{6}{223.6}{254.1}
+\highlight{96.3}{26.2}{104.5}{29.8}
+\highlight{38.1}{30.1}{96.4}{33.6}
+\highlight[hlpink]{72.6}{57.0}{104.4}{60.6}
+\highlight[hlgreen]{78.9}{85.9}{104.4}{89.4}
+\ring{89.2}{161.0}{95.5}{164.5}
+\ring{122.8}{172.5}{129.1}{176.0}
+\highlight[hlpink]{60.9}{235.2}{106.5}{238.7}
+
+\block[y=27]{%
+\heading{Figure 4: gains appear with scale}
+\num{1}\ \textbf{How to read it}: rows = benchmark (GSM8K, SVAMP, MAWPS); columns = model family. $x$ = model size in
+billions of parameters (one point per size, evenly spaced); $y$ = solve rate (\%).
+\begin{points}
+  \item \textbf{black} = standard prompting; \blue{\textbf{blue}} = chain of thought; \orange{dashed} = prior
+        supervised best. Look at the top right: PaLM 540B on GSM8K reaches the dashed line.
+\end{points}
+\begin{keyidea}
+The blue curve breaks away from the black one only for the largest models, and most of all on GSM8K.
+\end{keyidea}}
+
+\block{%
+\num{2}\ \textbf{Takeaway 2: harder problems gain more.} GSM8K (lowest baseline) more than doubled for the largest
+GPT and PaLM; on SingleOp (one step) the gains were \hl[hlpink]{negative or very small}.}
+
+\block{%
+\num{3}\ \textbf{Takeaway 3: as good as finetuning.} PaLM 540B sets a \hl[hlgreen]{new state of the art} on GSM8K, SVAMP
+and MAWPS, and is within 2\,\% on AQuA and ASDiv. On SVAMP, standard prompting had already passed the prior best.}
+
+\block[y=115]{%
+\num{4}\ \textbf{Why does it work? They read the chains} (LaMDA 137B, GSM8K):
+\begin{smalltable}{l l}
+50 correct answers & all chains sound, \textbf{except 2} (right by luck) \\
+50 wrong answers & \red{\textbf{46\%}} almost right (a calculator slip, a missing step) \\
+ & \red{\textbf{54\%}} major errors (understanding, coherence) \\
+\end{smalltable}
+Scaling PaLM from 62B to 540B fixes most one-step-missing and semantic errors (Appendix A.1).}
+
+\block[y=203]{%
+\num{5}\ \textbf{§3.3 Ablation}: is it really the chain of thought, or something that comes with it? Three variants,
+each removing one ingredient (Figure 5, next page).}
+
+\block[y=224]{%
+\num{6}\ \textbf{Equation only}: write just the equation, then the answer. It \hl[hlpink]{does not help much on GSM8K}:
+those questions are too hard to turn straight into an equation. It does help on one- or two-step datasets.}

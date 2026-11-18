@@ -1,0 +1,77 @@
+%% Page 1: title, abstract and Figure 1 (the whole method in one picture).
+\crumbs{Title \,›\, Abstract \,›\, Figure~1: standard vs chain-of-thought prompting}
+\insection{abs}
+
+%% ---- marks on the original page (mm from the top-left corner; annotate_pdf.py anchors <folder> 1)
+\bracket{1}{35.2}{48.3}
+\bracket{2}{63.9}{84.6}
+\bracket{3}{106.8}{129.6}
+\bracket{4}{130.6}{153.4}
+\badge{5}{37.5}{162.3}
+\badge{6}{117.5}{162.3}
+\bracket{7}{229.4}{236.8}
+\highlight{118.4}{106.8}{165.1}{110.3}
+\highlight{50.8}{110.6}{60.5}{114.2}
+\highlight[hlgreen]{154.7}{114.5}{165.1}{118.0}
+\highlight[hlgreen]{50.8}{118.4}{114.6}{121.9}
+\highlight{76.4}{142.1}{165.1}{145.7}
+\ring{64.7}{212.3}{67.5}{215.2}
+\pencilbox[ok]{111.7}{211.2}{171.2}{223.1}
+\penunderline{38.1}{135.9}{261.8}
+
+\block[y=35]{%
+\num{1}\ \textbf{The claim in the title}: a \textbf{prompt} (no training, no new weights) \orig{elicits} reasoning. The
+ability is already inside a large model; the right examples in the prompt draw it out.}
+
+\block[y=63]{%
+\num{2}\ Google Research, Brain Team. Published at \textbf{NeurIPS 2022} (underlined at the foot of the page);
+this is the arXiv v6 of January 2023.}
+
+\block[y=100]{%
+\heading{The abstract in four lines}
+\num{3}\ \textbf{Definition to remember}: a \hl{chain of thought} = a series of \textbf{intermediate reasoning steps},
+in plain language, written \textbf{before} the answer. \textbf{Chain-of-thought prompting} = put a few such worked
+examples (\orig{exemplars}) in the prompt.
+\begin{points}
+  \item \hl[hlgreen]{\orig{emerge naturally in sufficiently large}} models $\rightarrow$ size matters (Figure 4, page 5).
+\end{points}}
+
+\block[y=130]{%
+\num{4}\ \textbf{Headline result}: PaLM 540B + just \textbf{eight} exemplars $\rightarrow$ state of the art on
+\textbf{GSM8K} (grade-school maths word problems), beating even GPT-3 \textbf{finetuned} on the task and checked by a
+\orig{verifier}.
+\begin{question}
+Three models or five? The abstract says three; §3.1 uses five (GPT-3, LaMDA, PaLM, UL2, Codex).
+The main figures show LaMDA, GPT and PaLM.
+\end{question}}
+
+\block[y=160]{%
+\heading{Figure 1: the whole method}
+\begin{keyidea}
+Same model, same question. The only change: the example answer in the prompt \textbf{shows its working}.
+\end{keyidea}}
+
+\block[x=0, w=92]{%
+\num{5}\ \textbf{Standard prompting} (left). \orig{Model Input} = one solved example + the new question. The example
+answer is bare (\orig{The answer is 11}), so the model jumps straight to an answer: \red{\textbf{27} \faTimes}
+(circled).}
+
+\block[x=97, w=92.9, side]{%
+\num{6}\ \textbf{Chain-of-thought prompting} (right). The example now includes the reasoning (\blue{blue}):
+$5+2\times3=11$. The model copies the style and writes its own steps (\green{green box}):
+$23-20=3$, $3+6=\mathbf{9}$ \green{\faCheck}.}
+
+\block{%
+\begin{warning}
+The figure shows \textbf{one} exemplar; the real prompts have \textbf{eight} (§3.1, full set in Appendix Table 20).
+Nothing is learned in the weights: \orig{in-context learning} only shows the \textbf{format} of a good answer.
+\end{warning}}
+
+\block[y=228]{%
+\num{7}\ Caption: the highlighted text in the figure \textbf{is} the chain of thought; the green part is
+\textbf{generated} by the model.}
+
+\block{%
+\begin{summary}
+Show a large model a few examples that reason out loud, and it reasons out loud too, and gets more answers right.
+\end{summary}}

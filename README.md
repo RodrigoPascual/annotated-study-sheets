@@ -5,50 +5,56 @@
 [![Claude Code Skill](https://img.shields.io/badge/Claude%20Code-Skill-D97757)](#install)
 [![Agent Skills](https://img.shields.io/badge/Agent%20Skills-SKILL.md-1F5FA8)](skills/annotated-study-sheets/SKILL.md)
 [![License: MIT](https://img.shields.io/badge/License-MIT-2E7D32)](LICENSE)
-[![Zero dependencies](https://img.shields.io/badge/dependencies-0-6B7280)](skills/annotated-study-sheets/assets)
+[![Output](https://img.shields.io/badge/output-annotated%20PDF%20%2B%20HTML%20decks-6A3D9A)](#two-things-it-makes)
 
-**A skill for Claude Code (and any agent that reads `SKILL.md`) that turns any paper, PDF or slide deck into a hand-annotated study sheet,**
-**and builds offline HTML talks where one key — `N` — reveals the study sheet behind every slide.**
+**A skill for Claude Code (and any agent that reads `SKILL.md`) that turns any paper or PDF into an annotated study copy —**
+**every original page beside a handwritten notes page, with pencil marks on the original — and builds offline HTML talks**
+**where one key, `N`, reveals the study sheet behind every slide.**
 
-Install the skill, ask *“annotate this paper”* or *“make me a study deck about…”*, open the HTML. That's it.
+Install the skill, ask *“annotate this paper”* or *“make me a study deck about…”*. That's it.
 
+[**▶ Example: annotated paper (PDF)**](https://rodrigopascual.github.io/annotated-study-sheets/examples/chain-of-thought-annotated/chain-of-thought-annotated.pdf) ·
 [**▶ Live demo: study deck**](https://rodrigopascual.github.io/annotated-study-sheets/examples/kan-explained/#5) ·
-[**▶ Live demo: annotated paper**](https://rodrigopascual.github.io/annotated-study-sheets/examples/chain-of-thought/#2) ·
 [Install](#install) · [How it works](#how-it-works)
 
-<img src="docs/img/demo-deck-v3.gif" alt="Pressing N on a slide: the slide moves left, pencil marks are drawn on it and a handwritten study sheet writes itself in" width="900">
+<img src="docs/img/paper-spread-p1.png" alt="An annotated PDF page: the original paper page on the left with numbered pencil brackets and highlighter, a handwritten notes page on the right" width="900">
 
 </div>
 
 ---
 
 **Annotated Study Sheets** is an open-source **Claude Code skill** (Agent Skill) that helps you **study papers, PDFs, lecture
-slides and web pages with AI**: it produces an **annotated study guide** with numbered marks on the original and
-handwritten-style explanations, and it builds **offline HTML presentations with speaker notes** — a lightweight,
-dependency-free alternative to reveal.js or Beamer for talks you also want to *study from*.
+slides and reports with AI**: it produces an **annotated PDF study guide** (the original pages, untouched, each beside a
+page of handwritten-style explanations, with numbered marks on the original), and it builds **offline HTML presentations
+with speaker notes** — a lightweight alternative to reveal.js or Beamer for talks you also want to *study from*.
 
 ## Why
 
 Slides are made to be *seen*; papers are made to be *read once*. Neither is made to be **studied**.
 This skill gives every page or slide a second layer: the explanation a good teacher would scribble in the margin.
 
-- **Numbered pencil marks** on the parts that matter — brackets beside text, boxes around equations, badges on figure panels.
-- **A study sheet** on dotted paper, in handwriting, that *writes itself in* block by block: key idea, explanations,
-  formulas, sources, “if asked” answers, pitfalls.
-- **Hover a note → a pencil arrow** points at the exact element it explains.
-- **Two versions in one file**: clean for the audience, annotated for you. Toggle with **N**.
+- **Numbered pencil marks** on the parts that matter — brackets beside paragraphs, boxes around equations, badges on
+  figure panels, highlighter on the 2–4 phrases to remember.
+- **A notes page** on dotted paper, in handwriting, **level with what it explains**: key idea, formulas symbol by symbol,
+  how to read each figure and table, “if someone asks” answers, pitfalls — and white space for your own notes.
+- **The original is never touched**: `paper.pdf` → a new `paper-annotated/paper-annotated.pdf`.
+- **Decks**: two versions in one file, clean for the audience, annotated for you. Toggle with **N**.
 
 ## Two things it makes
 
-### 1 · Annotated documents — papers, PDFs, web pages, existing slides
+### 1 · Annotated PDFs — papers, articles, reports, slides exported to PDF
 
 > *“Annotate this paper so I can study it.”*
 
-The agent renders the pages, finds the regions that carry the argument (abstract claim, key equations, figures, tables)
-and explains each one on the sheet. Example: the real **Chain-of-Thought Prompting** paper (Wei et al., 2022), 10 annotated
-sheets over its first 6 pages, from abstract to ablations — [open the demo](https://rodrigopascual.github.io/annotated-study-sheets/examples/chain-of-thought/#2).
+The agent copies the PDF, reads it whole, and builds a **new PDF where each page is a spread**: the original page on the
+left with numbered pencil marks, and a notes page on the right that explains every paragraph group, figure panel, table
+and equation, in the page's own order. A second file has the same pages one after the other, for A4 printing.
+Example: the real **Chain-of-Thought Prompting** paper (Wei et al., 2022), pages 1–6 —
+[open the annotated PDF](https://rodrigopascual.github.io/annotated-study-sheets/examples/chain-of-thought-annotated/chain-of-thought-annotated.pdf).
 
-<img src="docs/img/demo-paper-v4.gif" alt="An annotated paper page with numbered regions and the study sheet" width="900">
+<img src="docs/img/demo-paper-pdf.gif" alt="Flipping through the annotated PDF of the Chain-of-Thought paper: each original page beside its handwritten notes page" width="900">
+
+<img src="docs/img/paper-spread-p4.png" alt="Page 4: Figure 3 with badges on each task family, the models table and the emergence result explained" width="900">
 
 ### 2 · Study decks — new presentations with built-in speaker notes
 
@@ -58,11 +64,11 @@ Short, clean slides for the room; the depth lives in the sheet. Beamer-style sec
 figure zoom, editable notes. Example: **KAN: Kolmogorov-Arnold Networks** (Liu et al., 2024) explained in 12 slides with the
 paper's own figures — [open the demo](https://rodrigopascual.github.io/annotated-study-sheets/examples/kan-explained/#5).
 
+<img src="docs/img/demo-deck-v3.gif" alt="Pressing N on a slide: the slide moves left, pencil marks are drawn on it and a handwritten study sheet writes itself in" width="900">
+
 | Clean (what the audience sees) | Annotated (press **N**) |
 |---|---|
 | <img src="docs/img/deck-clean-v2.png" width="440"> | <img src="docs/img/deck-annotated-v2.png" width="440"> |
-
-<img src="docs/img/deck-formula-v2.png" alt="A formula slide with a purple pencil box and its explanation" width="900">
 
 ## Install
 
@@ -82,40 +88,37 @@ cp -r annotated-study-sheets/skills/annotated-study-sheets ~/.claude/skills/
 
 **Claude.ai / Claude Desktop** — zip `skills/annotated-study-sheets` and upload it under *Settings → Capabilities → Skills*.
 
-Annotating PDFs also needs `pip install pymupdf`.
+Annotated PDFs need `pip install pymupdf` and LuaLaTeX ([TeX Live](https://tug.org/texlive/), or MiKTeX on Windows).
+Study decks need nothing.
 
 **ChatGPT, Gemini or any chatbot (no install)** — chatbots that only get a link cannot run the scripts, and if they
-write their own CSS the result looks nothing like the screenshots. Paste this prompt with your file so they use the real
-engine:
+write their own CSS the result looks nothing like the screenshots. For a **study deck**, paste this prompt:
 
 ```text
-Make an annotated study sheet of the attached file with the "annotated-study-sheets" skill
+Make a study deck about <topic> with the "annotated-study-sheets" skill
 (https://github.com/RodrigoPascual/annotated-study-sheets). Follow AGENTS.md in that repo exactly:
-- Do NOT write any CSS or JavaScript. Load the engine with exactly these two tags:
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/RodrigoPascual/annotated-study-sheets@v1/skills/annotated-study-sheets/assets/study.css">
-  <script src="https://cdn.jsdelivr.net/gh/RodrigoPascual/annotated-study-sheets@v1/skills/annotated-study-sheets/assets/study.js"></script>
-- Start from skills/annotated-study-sheets/assets/document-template.html (deck-template.html for a new deck) and only
-  fill in <section class="slide"> elements, data-zones / data-n marks and <aside class="notes"> written in the notes
-  markup of skills/annotated-study-sheets/references/notes-syntax.md.
-- Export each page or slide of my file to pages/page-01.png, page-02.png… and give me a zip with index.html + pages/.
+- Do NOT write any CSS or JavaScript. Start from skills/annotated-study-sheets/assets/deck-template.html, which loads
+  the engine (study.css + study.js) from the jsDelivr CDN, and only fill in the <section class="slide"> elements,
+  the data-n marks and the <aside class="notes"> written in references/notes-syntax.md.
 ```
 
-The page then needs internet the first time it opens (the engine comes from the jsDelivr CDN); for fully offline use,
-put `study.css` and `study.js` next to `index.html`.
+For an **annotated PDF**, a chatbot can write the `notes/pNN.tex` files, but the PDF is compiled on your computer with
+`annotate_pdf.py build` (it needs LuaLaTeX).
 
 ## Use
 
 Just ask:
 
-- *“Annotate `attention.pdf` as a study sheet.”*
-- *“Explain these slides (`lecture3.pdf`) slide by slide, with marks on each figure.”*
-- *“Turn this blog post into an annotated study sheet.”*
+- *“Annotate `attention.pdf` so I can study it.”*
+- *“Explain these slides (`lecture3.pdf`) page by page, with marks on each figure, in Spanish.”*
+- *“Make an annotated copy of my report, pages 1–10.”*
 - *“Build a 12-slide deck about photosynthesis for 15-year-olds, with study notes.”*
 - *“Add study notes to every slide of my talk in `talk/index.html`.”*
 
-Your files are never modified: annotating `paper.pdf` creates a new `paper-annotated/` folder next to it.
+Your files are never modified: annotating `paper.pdf` creates a new `paper-annotated/` folder next to it, with
+`paper-annotated.pdf` (spreads: original | notes) and `paper-annotated-two-page.pdf` (original, notes, … for printing).
 
-Open the resulting `index.html` (double click). Keys:
+For a study deck, open the resulting `index.html` (double click). Keys:
 
 | Key | Action |
 |---|---|
@@ -131,7 +134,23 @@ Open the resulting `index.html` (double click). Keys:
 
 ## How it works
 
-The notes are plain text inside each slide, so they are easy for an agent to write and for you to edit:
+**Annotated PDF.** `annotate_pdf.py init paper.pdf` makes the copy and one notes file per page; `anchors` prints where
+everything is on a page (mm from its top-left corner); the agent writes the notes; `build` compiles with LuaLaTeX and
+checks for overflow. A notes file is short and readable:
+
+```latex
+\crumbs{§3 Method \,›\, Equation~2}
+\bracket{1}{40.8}{86.5}                       % bracket + badge 1 beside a paragraph group
+\highlight{66.2}{32.4}{147.5}{36.0}           % highlighter on a key phrase
+\pencilbox[maths]{22.5}{96.9}{109.8}{103.3}   % hand-drawn box around an equation
+
+\block[y=40]{\num{1}\ \textbf{What it says}: plain words, then why it matters.}
+\block[y=96]{\begin{formula}[Eq.~(2)] each symbol, the intuition, a toy example \end{formula}}
+```
+
+Full reference: [`annotate-pdf.md`](skills/annotated-study-sheets/references/annotate-pdf.md).
+
+**Study deck.** The notes are plain text inside each slide, so they are easy for an agent to write and for you to edit:
 
 ```html
 <section class="slide" data-section="The rule" data-title="The update rule">
@@ -161,34 +180,33 @@ The notes are plain text inside each slide, so they are easy for an agent to wri
 | `\| a \| b \|` | small table |
 | `→ …` | what comes next |
 
-Images and PDF pages get marks with `data-zones="1:x0,y0,x1,y1; 2:…:formula"` (percent of the image).
 Full reference: [`notes-syntax.md`](skills/annotated-study-sheets/references/notes-syntax.md) ·
-[`slide-layouts.md`](skills/annotated-study-sheets/references/slide-layouts.md) ·
-[`annotate-documents.md`](skills/annotated-study-sheets/references/annotate-documents.md).
+[`slide-layouts.md`](skills/annotated-study-sheets/references/slide-layouts.md).
 
 ## What's inside
 
 ```
 skills/annotated-study-sheets/
-├── SKILL.md                    # what the agent reads: workflow + writing guidelines
+├── SKILL.md                     # what the agent reads: workflows + writing guidelines
 ├── assets/
-│   ├── study.js / study.css    # the engine (~1,200 lines, no dependencies)
-│   ├── deck-template.html      # starting point for a new deck
-│   └── document-template.html  # starting point for an annotated document
-├── scripts/new_study.py        # starts a project: copies the engine byte for byte + template
-├── scripts/pdf_to_pages.py     # PDF → page images (+ text-block positions for the zones)
-└── references/                 # notes syntax, layouts, annotating documents
+│   ├── pdf/studysheet.sty       # annotated-PDF engine (LuaLaTeX): spreads, marks, notes boxes
+│   ├── study.js / study.css     # study-deck engine (no dependencies)
+│   └── deck-template.html       # starting point for a new deck
+├── scripts/annotate_pdf.py      # PDF → <name>-annotated/: init, anchors, build (+ checks)
+├── scripts/new_study.py         # starts a deck: copies the engine byte for byte + template
+└── references/                  # annotate-pdf, notes syntax, slide layouts
 examples/
-├── kan-explained/              # 12-slide study deck on “KAN: Kolmogorov-Arnold Networks”
-└── chain-of-thought/           # the “Chain-of-Thought Prompting” paper, annotated
+├── chain-of-thought-annotated/  # the “Chain-of-Thought Prompting” paper → annotated PDF (pages 1–6)
+└── kan-explained/               # 12-slide study deck on “KAN: Kolmogorov-Arnold Networks”
 ```
 
-Everything is English by default; set `window.STUDY = { lang: 'es' }` for Spanish labels (more languages welcome).
+Everything is English by default; `annotate_pdf.py init --lang es` and `window.STUDY = { lang: 'es' }` give Spanish
+labels (more languages welcome).
 
 ## Contributing
 
-Issues and PRs are welcome — new languages for the UI labels, slide layouts, examples in other fields, and better
-heuristics for placing marks on PDFs. Please keep the engine dependency-free.
+Issues and PRs are welcome — new languages for the labels, slide layouts, examples in other fields, and better
+heuristics for placing marks on PDFs. Please keep the deck engine dependency-free.
 
 If this helped you study or present, a ⭐ helps others find it.
 

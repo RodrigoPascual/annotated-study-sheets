@@ -1,0 +1,67 @@
+%% Page 2: Introduction, Figure 2 and the start of Section 2.
+\crumbs{§1 Introduction \,›\, Figure~2: GSM8K solve rates \,›\, §2 Chain-of-thought prompting}
+\insection{intro,method}
+
+%% ---- marks on the original page
+\badge{1}{32.5}{37.4}
+\badge{2}{123.5}{33.5}
+\bracket{3}{76.0}{137.3}
+\bracket{4}{139.5}{177.7}
+\bracket{5}{180.0}{214.2}
+\bracket{6}{222.2}{254.9}
+\highlight[hlpink]{38.1}{58.7}{118.5}{62.2}
+\ring[ok]{165.7}{63.9}{169.2}{67.4}
+\ring{158.0}{75.4}{161.5}{78.9}
+\highlight{90.5}{166.3}{146.4}{170.0}
+\penunderline{73.5}{147.0}{146.9}
+\highlight[hlgreen]{67.3}{199.2}{122.4}{202.7}
+
+\block[y=34]{%
+\num{1}\ \textbf{Why this paper}: bigger models brought better accuracy and sample efficiency, but
+\hl[hlpink]{scaling alone \orig{has not proved sufficient}} for multi-step reasoning: arithmetic, commonsense,
+symbolic (Rae et al., 2021).}
+
+\block{%
+\num{2}\ \textbf{Figure 2}. $y$ = \textbf{solve rate}: \% of GSM8K problems answered correctly.
+\begin{smalltable}{l r}
+System & solve rate (\%) \\ \midrule
+Finetuned GPT-3 175B & 33 \\
+Prior best & 55 \\
+PaLM 540B, standard prompting & \red{\textbf{18}} \\
+PaLM 540B, chain-of-thought prompting & \green{\textbf{57}} \\
+\end{smalltable}
+\begin{points}
+  \item The first two are \textbf{finetuned} results from Cobbe et al. (2021); the last two are the \textbf{same} PaLM
+        with prompting only. From 18 to 57 with no training at all.
+\end{points}}
+
+\block[y=80]{%
+\num{3}\ \textbf{Two ideas combined}:
+\begin{steps}
+  \item \textbf{Rationales}: models that write natural-language steps before the answer do better at arithmetic,
+        but so far they had to be \textbf{trained or finetuned} on such steps.
+  \item \textbf{Few-shot prompting} (Brown et al., 2020): no training, just a few input--output
+        \orig{exemplars} in the prompt.
+\end{steps}}
+
+\block[y=139.5]{%
+\num{4}\ \textbf{Why each idea alone falls short}:
+\begin{arrows}
+  \item rationale training needs a large set of \textbf{high-quality rationales} (underlined): costly to write;
+  \item plain few-shot prompting works poorly on reasoning and barely improves with scale.
+\end{arrows}
+\begin{keyidea}
+Prompt with triples \hl{$\langle$input, chain of thought, output$\rangle$}: the benefit of rationales, without training.
+\end{keyidea}}
+
+\block[y=181]{%
+\num{5}\ Evaluated on \textbf{arithmetic, commonsense and symbolic} reasoning. Why prompting-only matters:
+\hl[hlgreen]{no large training dataset}, and \textbf{one} model checkpoint does many tasks.}
+
+\block[y=222]{%
+\num{6}\ \textbf{§2 starts from how people solve problems}: ``she has 10 \ldots{} then \ldots{} 7 \ldots{} so the answer
+is 7'': split the problem, solve each step, then answer. The goal: give a model the same habit.
+\begin{question}
+Isn't a chain of thought just an explanation? Not quite: an explanation usually comes \textbf{after} the answer; a
+chain of thought comes \textbf{before} it and leads to it (page 3).
+\end{question}}

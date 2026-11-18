@@ -1,34 +1,47 @@
 # Instructions for AI assistants using this repository
 
-This repo is the **annotated-study-sheets** skill: it turns a paper, PDF, web page or slide deck into an annotated study
-sheet (original on the left with pencil marks, handwritten-style notes on the right, **N** toggles), or builds a new
-HTML study deck. The full skill is `skills/annotated-study-sheets/SKILL.md` — read it.
+This repo is the **annotated-study-sheets** skill. The full skill is `skills/annotated-study-sheets/SKILL.md` — read it.
+It makes two things:
 
-## The one rule: never write your own CSS or JavaScript
+1. **Annotated PDF** from a paper, article, report or any PDF (slides and web pages: export to PDF first):
+   a new PDF where every original page, untouched, sits beside a handwritten-style notes page, with numbered pencil
+   marks on the original. **A PDF is never converted to HTML.**
+2. **Study deck**: a new offline HTML presentation whose study sheet appears with the **N** key.
 
-The whole look and behaviour is in the engine: `skills/annotated-study-sheets/assets/study.css` and `study.js`.
-Your output must be **one `index.html` that uses the engine**, plus the page images. Nothing else.
+Never modify the user's original file: everything goes into a new folder `<original-name>-annotated/`.
 
-- If you can run commands: `python skills/annotated-study-sheets/scripts/new_study.py document --source FILE`
-  (or `deck OUT_DIR`) and edit only the generated `index.html`.
-- If you cannot (chat-only assistant): copy `skills/annotated-study-sheets/assets/document-template.html`
-  (or `deck-template.html`) and load the engine from the CDN with exactly these two tags:
+## The one rule: never write your own styling
+
+The look lives in the engines. Do not write CSS, JavaScript or LaTeX styling of your own.
+
+**Annotated PDF** — engine `skills/annotated-study-sheets/assets/pdf/studysheet.sty`, driver `scripts/annotate_pdf.py`:
+
+```bash
+python skills/annotated-study-sheets/scripts/annotate_pdf.py init paper.pdf [--lang es]   # -> paper-annotated/
+python skills/annotated-study-sheets/scripts/annotate_pdf.py anchors paper-annotated 3     # positions in mm
+python skills/annotated-study-sheets/scripts/annotate_pdf.py build paper-annotated         # -> paper-annotated.pdf
+```
+
+You write only `paper-annotated/notes/pNN.tex` (marks + notes blocks) and the sections line of `main.tex`.
+Macros and a full example: `skills/annotated-study-sheets/references/annotate-pdf.md` and
+`examples/chain-of-thought-annotated/notes/`. If you cannot run commands, write the `notes/pNN.tex` files and tell the
+user to run the `build` command (it needs LuaLaTeX).
+
+**Study deck** — engine `skills/annotated-study-sheets/assets/study.css` + `study.js`:
+
+- If you can run commands: `python skills/annotated-study-sheets/scripts/new_study.py deck OUT_DIR` and edit only the
+  generated `index.html`.
+- If you cannot (chat-only assistant): copy `skills/annotated-study-sheets/assets/deck-template.html`; it loads the
+  engine from the CDN with exactly these two tags:
 
 ```html
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/RodrigoPascual/annotated-study-sheets@v1/skills/annotated-study-sheets/assets/study.css">
 <script src="https://cdn.jsdelivr.net/gh/RodrigoPascual/annotated-study-sheets@v1/skills/annotated-study-sheets/assets/study.js"></script>
 ```
 
-**Wrong output** (redo it): a page with its own `<style>` theme, its own slide/keyboard script, a top bar or nav you
-wrote, badge `<button>`s positioned by hand, or notes written as HTML cards instead of `<aside class="notes">`.
+Then write `<section class="slide">` elements with `data-n` marks and `<aside class="notes">` in the plain-text markup
+of `skills/annotated-study-sheets/references/notes-syntax.md`. Example: `examples/kan-explained/index.html`.
 
-## What you write
-
-1. One `<section class="slide page">` per page/slide image (`pages/page-01.png` …) — see `examples/chain-of-thought/index.html`.
-2. On the `<img>`: `data-zones="1:x0,y0,x1,y1; 2:x0,y0,x1,y1:box"` (percent of the image) for the regions you explain.
-3. `<aside class="notes">` in the plain-text markup of `skills/annotated-study-sheets/references/notes-syntax.md`:
-   `# title`, `! key idea`, `(1)` block per zone, `-` bullets, `f:` formula, `warn:`, `??` question, `→` next page.
-4. `window.STUDY = { title, author, lang: 'en'|'es', openSheet: true, size: [1000,1300] }` (portrait pages;
-   use `[1600,900]` for 16:9 slides).
-
-Never modify the user's original file: deliver everything in a folder named `<original-name>-annotated/`.
+**Wrong output** (redo it): an HTML page made from a PDF; a page with its own `<style>` theme, its own slide/keyboard
+script, a top bar you wrote, badge `<button>`s positioned by hand, or notes written as HTML cards instead of
+`<aside class="notes">`.
